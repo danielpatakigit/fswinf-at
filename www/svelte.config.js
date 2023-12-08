@@ -25,6 +25,10 @@ const config = {
 			precompress: false,
 			strict: true,
 		}),
+		prerender: {
+			concurrency: 1,
+			crawl: true,
+		},
 	},
 };
 
