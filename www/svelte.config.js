@@ -1,6 +1,10 @@
 import { mdsvex } from "mdsvex";
 import adapter from "@sveltejs/adapter-static";
 import { vitePreprocess } from "@sveltejs/kit/vite";
+import lang from "./src/lib/translations/lang.js";
+
+// lang config
+const supportedLocales = Object.keys(lang);
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
@@ -26,8 +30,22 @@ const config = {
 			strict: true,
 		}),
 		prerender: {
-			concurrency: 1,
 			crawl: true,
+			entries:
+				// supportedLocales.reduce(
+				// 	(acc, locale) => [
+				// 		...acc,
+				// 		`/${locale}`,
+				// 		`/${locale}/401`,
+				// 		`/${locale}/403`,
+				// 		`/${locale}/404`,
+				// 		`/${locale}/500`,
+				// 	],
+				["/en", "/de", "*"],
+			// ),
+			// ,
+			// handleHttpError: "warn",
+			// crawl: true,
 		},
 	},
 };

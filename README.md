@@ -8,7 +8,7 @@ The video guide I used for my implementation: https://www.youtube.com/watch?v=Y6
 
 Here it also gets mentioned that there are still some issues open when it comes to static rendering and he didn't even use adapter-static just set `export const prerender = true` in the root ˛`layout.svelte`.
 
-## My own solution
+## My own solution (idea)
 
 The current website functions this way:
 
@@ -34,3 +34,10 @@ this request would be matched to the [lang] route in SvelteKit but since it isn'
 In Markdown file there has to be a meta tag then to mark that this is the new page for the old winf.at/beratung. Then the load function after determining that this is an old URL request starts looking for the Markdown file with this tag and then if it found throws a 301 redirect to winf.at/de/consulting.
 
 If it didn't find such a match because the tag wasn't given or the page doesn't exist anymore we redirect either to the homepage or to a simple 404.
+
+## Internationalization Solution
+
+All hail the creator of this libary
+https://github.com/sveltekit-i18n/lib/tree/master
+
+Fantastic no dependency, minimal and elegant solution EVEN for static sites. Based on i18n I don't understand everything yet but there really isn't a lot of code behind this one so eventually I will get it.
