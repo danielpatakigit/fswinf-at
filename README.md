@@ -61,4 +61,4 @@ Proven features:
 
 Missing features:
 
-- The also abovementioned auto-redirect for the old links, it should be hard to implement later down the line however
+- The also abovementioned auto-redirect for the old links, it shouldn't be hard to implement later down the line however
