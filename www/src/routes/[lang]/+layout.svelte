@@ -15,7 +15,20 @@
 	} from "mode-watcher";
 
 	import Icon from "@iconify/svelte";
-	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
+
+	import { onNavigate } from "$app/navigation";
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	export let data;
 	let filteredPosts = [];
@@ -68,7 +81,12 @@
 	+
 </button>
 <hr />
+<!-- {#key data.url} -->
+<!-- <main transition:fade> -->
 <slot />
+<!-- </main> -->
+<!-- {/key} -->
+
 <br />
 <select on:change={({ target }) => goto(target.value)}>
 	{#each $locales as lc}
@@ -87,4 +105,5 @@
 		icon={"mdi:theme-light-dark"}
 		class="text-4xl"
 	></Icon>
+	<span>{$mode}</span>
 </button>

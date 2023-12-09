@@ -15,6 +15,7 @@
 	/>
 </svelte:head>
 
+<svelte:component this={data.content} />
 <article>
 	<!-- Title -->
 	<hgroup>
@@ -30,7 +31,5 @@
 	</div>
 
 	<!-- Post -->
-	<div class="prose">
-		<svelte:component this={data.content} />
-	</div>
+	<div class="prose"></div>
 </article>

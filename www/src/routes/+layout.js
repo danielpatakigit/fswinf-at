@@ -13,5 +13,5 @@ export const load = async ({ url, fetch }) => {
 	await setLocale(lang);
 	await setRoute(route);
 
-	return { route, lang };
+	return { route, lang, url: url.pathname };
 };
