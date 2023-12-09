@@ -10,5 +10,5 @@
 	<p>{$t(`error.${status}`, { default: $t("error.default") })}</p>
 	<br />
 	<br />
-	{$locale} – {$t(`lang.${$locale}`)}
+	{$locale} - {$t(`lang.${$locale}`)}
 </div>

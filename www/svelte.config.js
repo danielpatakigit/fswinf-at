@@ -20,6 +20,9 @@ const config = {
 	preprocess: [mdsvex(mdsvexOptions), vitePreprocess({})],
 
 	kit: {
+		files: {
+			assets: "src/lib/assets",
+		},
 		adapter: adapter({
 			// default options are shown. On some platforms
 			// these options are set automatically — see below
@@ -42,10 +45,6 @@ const config = {
 				// 		`/${locale}/500`,
 				// 	],
 				["/en", "/de", "*"],
-			// ),
-			// ,
-			// handleHttpError: "warn",
-			// crawl: true,
 		},
 	},
 };
