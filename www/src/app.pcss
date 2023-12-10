@@ -7,9 +7,23 @@
 @tailwind utilities;
 
 @layer base {
+	/* Scrollbar styling */
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		@apply rounded-full bg-gray-200;
+	}
+
 	body {
 		font-family: "Inter", sans-serif;
-		@apply mx-4;
 	}
 
 	a {
@@ -20,5 +34,12 @@
 	input,
 	select {
 		@apply text-blue-500 hover:text-blue-700;
+	}
+
+	section {
+		/* @apply mx-auto w-[min(100%,_60rem)]; */
+	}
+	article {
+		@apply mx-auto w-[min(100%,_60rem)];
 	}
 }
