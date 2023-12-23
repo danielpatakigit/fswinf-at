@@ -1,10 +1,11 @@
 ---
 title: Example
 description: First post.
-date: "2023-4-14"
+date: 2023-4-14
 categories:
   - sveltekit
   - svelte
+cover: placeholder.jpg
 published: true
 ---
 

@@ -14,7 +14,7 @@
 	import { fade } from "svelte/transition";
 	import { onNavigate } from "$app/navigation";
 	import "../../app.pcss";
-	import logo from "/src/static/logo_Marginless.png";
+	import logo from "$lib/assets/logo_Marginless.png";
 	import { Hamburger } from "svelte-hamburgers";
 
 	// onNavigate((navigation) => {
@@ -29,21 +29,70 @@
 	// });
 
 	export let data;
-	let filteredPosts = [];
+	let results = [];
 	$: if (data.posts) {
-		filteredPosts = data.posts.filter(
-			(post) => post.lang === $locale,
-		);
+		results = data.posts
+			.filter((post) => {
+				const searchTerm = term.toLowerCase();
+
+				return (
+					post.lang === $locale &&
+					(post.title.toLowerCase().includes(searchTerm) ||
+						post.description.toLowerCase().includes(searchTerm) ||
+						post.categories.some((category) =>
+							category.toLowerCase().includes(searchTerm),
+						) ||
+						post.slug.toLowerCase().includes(searchTerm))
+				);
+			})
+			.map((post) => ({
+				post,
+				relevanceScore: calculateRelevance(post, term),
+			}))
+			.sort((a, b) => b.relevanceScore - a.relevanceScore)
+			.map((item) => item.post);
 	}
 
-	const count = writable(2);
+	function calculateRelevance(post, searchTerm) {
+		let relevanceScore = 0;
+
+		// Prioritize title matching
+		if (post.title.toLowerCase().includes(searchTerm)) {
+			relevanceScore += 5;
+		}
+
+		// Add points for category matching
+		if (
+			post.categories.some((category) =>
+				category.toLowerCase().includes(searchTerm),
+			)
+		) {
+			relevanceScore += 3;
+		}
+
+		// Add points for slug matching
+		if (post.slug.toLowerCase().includes(searchTerm)) {
+			relevanceScore += 2;
+		}
+
+		// Add points for description matching
+		if (post.description.toLowerCase().includes(searchTerm)) {
+			relevanceScore += 1;
+		}
+
+		return relevanceScore;
+	}
 
 	$: ({ route } = $page.data);
 
-	let open;
+	let open = false;
 	let search = false;
+	let term = "";
 	function toggleSearch() {
-		search = !search;
+		search = search ? false : true;
+	}
+	function closeSearch() {
+		search = false;
 	}
 </script>
 
@@ -56,11 +105,13 @@
 		<Icon icon="mdi:home"></Icon>
 		<Icon icon="mdi:home"></Icon>
 	</div>
-	<img
-		class="max-h-12 m-auto"
-		src={logo}
-		alt="winf-logo"
-	/>
+	<a href="/{$locale}">
+		<img
+			class="max-h-12 m-auto"
+			src={logo}
+			alt="winf-logo"
+		/>
+	</a>
 	<div class="flex items-center justify-center gap-2 w-52">
 		<select on:change={({ target }) => goto(target.value)}>
 			{#each $locales as lc}
@@ -97,7 +148,7 @@
 	>
 		{#each Array(8) as _, i}
 			<a
-				href="##"
+				href="/{$locale}/about"
 				class=" flex gap-4 border p-2 relative group/tooltip hover:cursor-pointer"
 			>
 				<div
@@ -110,7 +161,7 @@
 				</div>
 				<div class="flex flex-col gap-1">
 					<span
-						href="##"
+						href="/"
 						class="font-bold"
 					>
 						Lorem ipsum dolor sit amet.
@@ -133,11 +184,42 @@
 		? 'visible'
 		: 'invisible'} fixed h-screen w-screen max-w-full flex items-center justify-center backdrop-blur-sm bg-white/30"
 >
-	<div class="border">
-		<h2>Search for anything</h2>
-		<div class="flex flex-row">
+	<div class="border bg-white p-4 max-w-min">
+		<div class="flex justify-between">
+			<h2>Search for anything</h2>
+			<button on:click={closeSearch}>
+				<Icon icon="mdi:close"></Icon>
+			</button>
+		</div>
+		<div class="flex flex-row border gap-4 items-center">
 			<Icon icon="mdi:search"></Icon>
-			<input type="text" />
+			<input
+				type="text"
+				placeholder="Search..."
+				bind:value={term}
+			/>
+		</div>
+		<div
+			id="suggested"
+			class="flex gap-2"
+		>
+			<div>Lorem ipsum dolor sit.</div>
+			<div>Sed ipsam cum soluta.</div>
+			<div>Id consectetur eum rem?</div>
+		</div>
+		<div
+			id="results"
+			class="flex flex-col gap-2"
+		>
+			{#each results as result, i}
+				<a
+					href="/{$locale}/{result.slug}"
+					class="border"
+					on:click={closeSearch}
+				>
+					{JSON.stringify(result, null, "\t")}
+				</a>
+			{/each}
 		</div>
 	</div>
 </div>

@@ -5,6 +5,7 @@ date: "2023-4-15"
 categories:
   - sveltekit
   - svelte
+cover: placeholder.jpg
 published: true
 ---
 

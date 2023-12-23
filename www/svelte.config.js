@@ -2,6 +2,7 @@ import { mdsvex } from "mdsvex";
 import adapter from "@sveltejs/adapter-static";
 import { vitePreprocess } from "@sveltejs/kit/vite";
 import lang from "./src/lib/translations/lang.js";
+import relativeImages from "mdsvex-relative-images";
 
 // lang config
 const supportedLocales = Object.keys(lang);
@@ -9,6 +10,7 @@ const supportedLocales = Object.keys(lang);
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: [".md"],
+	remarkPlugins: [relativeImages],
 };
 
 /** @type {import('@sveltejs/kit').Config} */
