@@ -2,9 +2,9 @@ import { json } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-	let posts = [];
+	let content = [];
 
-	const paths = import.meta.glob("/src/lib/posts/*/*.md", {
+	const paths = import.meta.glob("/src/lib/content/*/*.md", {
 		eager: true,
 	});
 
@@ -22,15 +22,15 @@ export async function load() {
 			const langMatch = path.match(/\.(.*?)\./);
 			const lang = langMatch ? langMatch[1] : ""; // Extract language code
 			const post = { ...metadata, slug, lang };
-			post.published && posts.push(post);
+			post.published && content.push(post);
 		}
 	}
 
-	posts = posts.sort(
+	content = content.sort(
 		(first, second) =>
 			new Date(second.date).getTime() -
 			new Date(first.date).getTime(),
 	);
 
-	return { posts: posts };
+	return { content: content };
 }

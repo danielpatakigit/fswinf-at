@@ -2,7 +2,6 @@
 	import { t, locales, locale } from "$lib/translations";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
-	import { writable } from "svelte/store";
 	import {
 		ModeWatcher,
 		toggleMode,
@@ -11,7 +10,6 @@
 		resetMode,
 	} from "mode-watcher";
 	import Icon from "@iconify/svelte";
-	import { fade } from "svelte/transition";
 	import { onNavigate } from "$app/navigation";
 	import "../../app.pcss";
 	import logo from "$lib/assets/logo_Marginless.png";
@@ -30,8 +28,8 @@
 
 	export let data;
 	let results = [];
-	$: if (data.posts) {
-		results = data.posts
+	$: if (data.content) {
+		results = data.content
 			.filter((post) => {
 				const searchTerm = term.toLowerCase();
 
@@ -138,45 +136,16 @@
 				class="text-4xl"
 			></Icon>
 		</button>
-		<button>
+		<!-- <button>
 			<Hamburger bind:open></Hamburger>
-		</button>
+		</button> -->
 	</div>
-	<nav
-		class=" {open ? 'visible' : 'invisible'}
-		absolute bg-white dark:bg-black grid grid-cols-3 gap-2 border p-4 h-[90vh] mx-auto sm:h-auto top-[100%] w-screen max-w-full"
-	>
-		{#each Array(8) as _, i}
-			<a
-				href="/{$locale}/about"
-				class=" flex gap-4 border p-2 relative group/tooltip hover:cursor-pointer"
-			>
-				<div
-					class="flex items-center justify-center aspect-squares w-24"
-				>
-					<Icon
-						icon="mdi:home"
-						class="text-4xl"
-					></Icon>
-				</div>
-				<div class="flex flex-col gap-1">
-					<span
-						href="/"
-						class="font-bold"
-					>
-						Lorem ipsum dolor sit amet.
-					</span>
-				</div>
-				<span
-					class="font-light absolute z-[10] bg-black text-white text-center py-2 px-4 rounded-md opacity-0 group-hover/tooltip:opacity-100 transition-opacity invisible group-hover/tooltip:visible top-[110%]"
-				>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				</span>
-			</a>
-		{/each}
-		<div></div>
-	</nav>
 </header>
+<nav class="mt-4 py-2 flex flex-row w-full justify-between">
+	{#each Array(8) as _, i}
+		<span class="uppercase text-center">menupoint {i}</span>
+	{/each}
+</nav>
 
 <div
 	id="modal"
@@ -258,3 +227,41 @@
 <main>
 	<slot />
 </main>
+
+<section class="bg-green-200">
+	<article>
+		<footer class="flex flex-col border-t-4 mt-4 py-4 gap-4">
+			<div class="grid grid-cols-4 grid-rows-2 gap-4 grid-flow-col">
+				{#each Array(8) as _, i}
+					<span class="uppercase text-center font-bold">
+						menupoint {i}
+					</span>
+				{/each}
+			</div>
+			<div class="flex flex-row justify-between border my-2 py-2">
+				<div class="max-w-[10rem] flex justify-center items-center">
+					<img
+						src={logo}
+						alt="logo"
+					/>
+				</div>
+				<div class="flex gap-2 items-center justify-center">
+					{#each Array(5) as _, i}
+						<span>Icon {i}</span>
+					{/each}
+				</div>
+			</div>
+			<div class="text-sm font-light flex gap-4 text-black">
+				<span>Terms of use</span>
+				<span>Privacy Policy</span>
+				<span>Etc.</span>
+			</div>
+			<div class="font-light text-sm">
+				Copyright c <br />
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
+				a dolores? Perspiciatis facilis vitae cum molestias repellat id
+				sint dolorem.
+			</div>
+		</footer>
+	</article>
+</section>

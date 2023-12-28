@@ -3,7 +3,7 @@ import { error } from "@sveltejs/kit";
 export async function load({ params }) {
 	try {
 		const post = await import(
-			`../../../lib/posts/${params.slug}/${params.slug}.${params.lang}.md`
+			`../../../lib/content/${params.slug}/${params.slug}.${params.lang}.md`
 		);
 		return {
 			content: post.default,
@@ -12,4 +12,3 @@ export async function load({ params }) {
 	} catch (e) {
 		throw error(404, "An error occured");
 	}
-}
