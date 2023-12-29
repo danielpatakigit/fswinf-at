@@ -1,5 +1,3 @@
-import { json } from "@sveltejs/kit";
-
 /** @type {import('./$types').PageLoad} */
 export async function load() {
 	let content = [];
@@ -28,12 +26,6 @@ export async function load() {
 			post.published && content.push(post);
 		}
 	}
-
-	content = content.sort(
-		(first, second) =>
-			new Date(second.date).getTime() -
-			new Date(first.date).getTime(),
-	);
 
 	return { content: content };
 }

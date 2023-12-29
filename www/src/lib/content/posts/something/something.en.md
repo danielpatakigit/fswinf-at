@@ -1,8 +1,7 @@
 ---
-title: Test post
-description: First post.
-date: "2023-4-14"
-# cover: placeholder.jpg
+title: Just a post
+description: valvlasfjsdjvlavjlkvjlaksjvldsajlvajsl
+date: 2023-4-14
 published: true
 ---
 
