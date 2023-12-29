@@ -4,13 +4,16 @@ import { json } from "@sveltejs/kit";
 export async function load() {
 	let content = [];
 
-	const paths = import.meta.glob("/src/lib/content/*/*.md", {
+	const paths = import.meta.glob("/src/lib/content/*/*/*.md", {
 		eager: true,
 	});
 
 	for (const path in paths) {
 		const file = paths[path];
-		const slug = path.split("/").at(-1)?.split(".")[0];
+
+		const pathParts = path.split("/");
+		const category = pathParts[pathParts.length - 3];
+		const slug = pathParts[pathParts.length - 2]?.split(".")[0];
 
 		if (
 			file &&
@@ -21,7 +24,7 @@ export async function load() {
 			const metadata = file.metadata;
 			const langMatch = path.match(/\.(.*?)\./);
 			const lang = langMatch ? langMatch[1] : ""; // Extract language code
-			const post = { ...metadata, slug, lang };
+			const post = { ...metadata, category, slug, lang };
 			post.published && content.push(post);
 		}
 	}

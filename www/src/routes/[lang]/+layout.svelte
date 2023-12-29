@@ -27,6 +27,7 @@
 	// });
 
 	export let data;
+	// console.log("Content data:", data);
 	let results = [];
 	$: if (data.content) {
 		results = data.content
@@ -37,9 +38,7 @@
 					post.lang === $locale &&
 					(post.title.toLowerCase().includes(searchTerm) ||
 						post.description.toLowerCase().includes(searchTerm) ||
-						post.categories.some((category) =>
-							category.toLowerCase().includes(searchTerm),
-						) ||
+						post.category.toLowerCase().includes(searchTerm) ||
 						post.slug.toLowerCase().includes(searchTerm))
 				);
 			})
@@ -60,12 +59,8 @@
 		}
 
 		// Add points for category matching
-		if (
-			post.categories.some((category) =>
-				category.toLowerCase().includes(searchTerm),
-			)
-		) {
-			relevanceScore += 3;
+		if (post.category.toLowerCase().includes(searchTerm)) {
+			relevanceScore += 1;
 		}
 
 		// Add points for slug matching
@@ -141,7 +136,9 @@
 		</button> -->
 	</div>
 </header>
-<nav class="mt-4 py-2 flex flex-row w-full justify-between">
+<nav
+	class="mt-4 py-2 flex flex-row w-full justify-between border-b-4"
+>
 	{#each Array(8) as _, i}
 		<span class="uppercase text-center">menupoint {i}</span>
 	{/each}
@@ -193,37 +190,6 @@
 	</div>
 </div>
 
-<!-- <a href="/{$locale}">{$t("menu.home")}</a>
-<a href="/{$locale}/about">{$t("menu.about")}</a>
-<hr />
-<h2>Links to posts</h2>
-<ul>
-	{#each filteredPosts as post}
-		<li>
-			<a href="/{post.lang}/{post.slug}">
-				{post.title}
-				<span>{post.date}</span>
-			</a>
-		</li>
-	{/each}
-</ul>
-<hr />
-{$t("menu.notification", { count: $count })}
-<br />
-<button
-	on:click={() => {
-		if ($count) $count -= 1;
-	}}
->
-	–
-</button>
-<button
-	on:click={() => {
-		$count += 1;
-	}}
->
-	+
-</button> -->
 <main>
 	<slot />
 </main>

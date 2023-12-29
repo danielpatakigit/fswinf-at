@@ -2,10 +2,7 @@
 title: Post zum Testen (Deutscher Titel)
 description: Beschreibung
 date: "2023-4-15"
-categories:
-  - sveltekit
-  - svelte
-cover: placeholder.jpg
+# cover: placeholder.jpg
 published: true
 ---
 
@@ -18,3 +15,5 @@ function greet(name: string) {
 	console.log(`Hallo ${name}! 👋`);
 }
 ```
+
+<!-- ![my image](/src/lib/assets/favicon.png) -->
