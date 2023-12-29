@@ -1,17 +1,17 @@
+import { sorting } from "$lib/content/sorting.js";
+
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-	let content = [];
+	const content = [];
 
-	const paths = import.meta.glob("/src/lib/content/*/*/*.md", {
+	const paths = import.meta.glob("/src/lib/content/*/*.md", {
 		eager: true,
 	});
 
 	for (const path in paths) {
 		const file = paths[path];
-
 		const pathParts = path.split("/");
-		const category = pathParts[pathParts.length - 3];
-		const slug = pathParts[pathParts.length - 2]?.split(".")[0];
+		const slug = pathParts[pathParts.length - 1]?.split(".")[0];
 
 		if (
 			file &&
@@ -19,13 +19,41 @@ export async function load() {
 			"metadata" in file &&
 			slug
 		) {
-			const metadata = file.metadata;
+			const { metadata } = file;
 			const langMatch = path.match(/\.(.*?)\./);
-			const lang = langMatch ? langMatch[1] : ""; // Extract language code
-			const post = { ...metadata, category, slug, lang };
-			post.published && content.push(post);
+			const lang = langMatch ? langMatch[1] : "";
+			const post = { ...metadata, slug, lang };
+
+			if (post.published) {
+				content.push(post);
+			}
 		}
 	}
 
-	return { content: content };
+	const combinedContent = Object.assign(
+		{},
+		...Object.entries(sorting).map(([categoryKey, slugs]) => {
+			const categoryObj = {};
+
+			slugs.forEach((slug) => {
+				const matchingContent = content.filter(
+					(item) => item.slug === slug,
+				);
+
+				if (matchingContent.length > 0) {
+					const contentObj = {};
+
+					matchingContent.forEach((item) => {
+						contentObj[item.lang] = item;
+					});
+
+					categoryObj[slug] = contentObj;
+				}
+			});
+
+			return { [categoryKey]: categoryObj };
+		}),
+	);
+
+	return { content: combinedContent, sorting };
 }

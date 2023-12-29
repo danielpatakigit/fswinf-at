@@ -1,11 +1,13 @@
 import { error } from "@sveltejs/kit";
+import { sorting } from "$lib/content/sorting.js";
 
 export async function load({ params }) {
-	const possibleCategories = ["pages", "posts"];
+	const possibleCategories = Object.keys(sorting);
+
 	for (const category of possibleCategories) {
 		try {
 			const file = await import(
-				`../../../lib/content/${category}/${params.slug}/${params.slug}.${params.lang}.md`
+				`../../../lib/content/${category}/${params.slug}.${params.lang}.md`
 			);
 
 			return {

@@ -1,6 +1,5 @@
 <script>
 	import Icon from "@iconify/svelte";
-	import placeholder from "$lib/assets/placeholder.jpg";
 </script>
 
 <section class="bg-green-200">
@@ -16,7 +15,7 @@
 		</div>
 		<div>
 			<img
-				src={placeholder}
+				src="/src/static/favicon.png"
 				alt="placeholder"
 			/>
 		</div>

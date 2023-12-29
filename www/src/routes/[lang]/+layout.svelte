@@ -10,10 +10,10 @@
 		resetMode,
 	} from "mode-watcher";
 	import Icon from "@iconify/svelte";
-	import { onNavigate } from "$app/navigation";
+	import { onNavigate, invalidateAll } from "$app/navigation";
 	import "../../app.pcss";
-	import logo from "$lib/assets/logo_Marginless.png";
 	import { Hamburger } from "svelte-hamburgers";
+	import { onMount } from "svelte";
 
 	// onNavigate((navigation) => {
 	// 	if (!document.startViewTransition) return;
@@ -27,65 +27,90 @@
 	// });
 
 	export let data;
-	// console.log("Content data:", data);
-	let results = [];
-	$: if (data.content) {
-		results = data.content
-			.filter((post) => {
-				const searchTerm = term.toLowerCase();
-
-				return (
-					post.lang === $locale &&
-					(post.title.toLowerCase().includes(searchTerm) ||
-						post.description.toLowerCase().includes(searchTerm) ||
-						post.category.toLowerCase().includes(searchTerm) ||
-						post.slug.toLowerCase().includes(searchTerm))
-				);
-			})
-			.map((post) => ({
-				post,
-				relevanceScore: calculateRelevance(post, term),
-			}))
-			.sort((a, b) => b.relevanceScore - a.relevanceScore)
-			.map((item) => item.post);
-	}
-
-	function calculateRelevance(post, searchTerm) {
-		let relevanceScore = 0;
-
-		// Prioritize title matching
-		if (post.title.toLowerCase().includes(searchTerm)) {
-			relevanceScore += 5;
-		}
-
-		// Add points for category matching
-		if (post.category.toLowerCase().includes(searchTerm)) {
-			relevanceScore += 1;
-		}
-
-		// Add points for slug matching
-		if (post.slug.toLowerCase().includes(searchTerm)) {
-			relevanceScore += 2;
-		}
-
-		// Add points for description matching
-		if (post.description.toLowerCase().includes(searchTerm)) {
-			relevanceScore += 1;
-		}
-
-		return relevanceScore;
-	}
 
 	$: ({ route } = $page.data);
 
 	let open = false;
 	let search = false;
 	let term = "";
+	let results = [];
+
 	function toggleSearch() {
 		search = search ? false : true;
 	}
 	function closeSearch() {
 		search = false;
+	}
+
+	function queryContent(combinedContent, category, page, lang) {
+		const result = [];
+
+		for (const [categoryKey, categoryObj] of Object.entries(
+			combinedContent,
+		)) {
+			if (category === "*" || categoryKey === category) {
+				for (const [pageKey, pageObj] of Object.entries(
+					categoryObj,
+				)) {
+					if (page === "*" || pageKey === page) {
+						for (const [langKey, langObj] of Object.entries(
+							pageObj,
+						)) {
+							if (lang === "*" || langKey === lang) {
+								result.push(langObj);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return result.length > 0 ? result : [];
+	}
+
+	$: if (data.content) {
+		results = queryContent(data.content, "*", "*", $locale);
+
+		if (term && term.trim() !== "") {
+			results = results
+				.map((result) => {
+					const { title, description, slug } = result;
+					const searchTermLower = term.toLowerCase();
+
+					// Initialize the score
+					let score = 0;
+
+					// Score based on title match
+					if (title.toLowerCase().includes(searchTermLower)) {
+						score += 3;
+					}
+
+					// Score based on slug match
+					if (slug.toLowerCase().includes(searchTermLower)) {
+						score += 2;
+					}
+
+					// Score based on description match
+					if (description.toLowerCase().includes(searchTermLower)) {
+						score += 1;
+					}
+
+					return { result, score };
+				})
+				.filter((item) => item.score > 0) // Remove items with no match
+				.sort((a, b) => b.score - a.score) // Order by score, higher scores first
+				.map((item) => item.result);
+		}
+	}
+
+	function getCategoriesAndPages(content) {
+		const result = {};
+
+		for (const [category, pages] of Object.entries(content)) {
+			result[category] = Object.keys(pages);
+		}
+
+		return Object.entries(result);
 	}
 </script>
 
@@ -101,12 +126,16 @@
 	<a href="/{$locale}">
 		<img
 			class="max-h-12 m-auto"
-			src={logo}
+			src="/src/static/logo_Marginless.png"
 			alt="winf-logo"
 		/>
 	</a>
 	<div class="flex items-center justify-center gap-2 w-52">
-		<select on:change={({ target }) => goto(target.value)}>
+		<select
+			on:change={({ target }) => {
+				goto(target.value);
+			}}
+		>
 			{#each $locales as lc}
 				<option
 					value="/{lc}{route}"
@@ -136,12 +165,25 @@
 		</button> -->
 	</div>
 </header>
-<nav
-	class="mt-4 py-2 flex flex-row w-full justify-between border-b-4"
->
-	{#each Array(8) as _, i}
-		<span class="uppercase text-center">menupoint {i}</span>
+<nav class="mt-4 py-2 flex flex-row w-full justify-around border-b-4">
+	{#each getCategoriesAndPages(data.content) as [category, pages]}
+		<a
+			href="/{$locale}/{pages[0] ? pages[0] : ''}"
+			class="uppercase"
+		>
+			{category}
+		</a>
 	{/each}
+
+	<!-- {#each data.sorting as category, i}
+		{@const [name, pages] = Object.entries(category)[0]}
+		<a
+			href="/{$locale}/{pages[0] ? pages[0] : ''}"
+			class="uppercase"
+		>
+			{name}
+		</a>
+	{/each} -->
 </nav>
 
 <div
@@ -207,7 +249,7 @@
 			<div class="flex flex-row justify-between border my-2 py-2">
 				<div class="max-w-[10rem] flex justify-center items-center">
 					<img
-						src={logo}
+						src="/src/static/logo_Marginless.png"
 						alt="logo"
 					/>
 				</div>

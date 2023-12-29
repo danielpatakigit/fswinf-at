@@ -1,10 +1,7 @@
-import { mdsvex } from "mdsvex";
 import adapter from "@sveltejs/adapter-static";
+import { mdsvex } from "mdsvex";
 import { vitePreprocess } from "@sveltejs/kit/vite";
-import lang from "./src/lib/translations/lang.js";
-
-// lang config
-const supportedLocales = Object.keys(lang);
+import { importAssets } from "svelte-preprocess-import-assets";
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
@@ -17,12 +14,13 @@ const config = {
 
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: [mdsvex(mdsvexOptions), vitePreprocess({})],
+	preprocess: [
+		mdsvex(mdsvexOptions),
+		importAssets(),
+		vitePreprocess({}),
+	],
 
 	kit: {
-		files: {
-			assets: "src/lib/assets",
-		},
 		adapter: adapter({
 			// default options are shown. On some platforms
 			// these options are set automatically — see below
@@ -34,17 +32,7 @@ const config = {
 		}),
 		prerender: {
 			crawl: true,
-			entries:
-				// supportedLocales.reduce(
-				// 	(acc, locale) => [
-				// 		...acc,
-				// 		`/${locale}`,
-				// 		`/${locale}/401`,
-				// 		`/${locale}/403`,
-				// 		`/${locale}/404`,
-				// 		`/${locale}/500`,
-				// 	],
-				["/en", "/de", "*"],
+			entries: ["/en", "/de", "*"],
 		},
 	},
 };
