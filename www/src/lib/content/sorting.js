@@ -1,6 +1,6 @@
 const sorting = {
 	studies: ["example", "hello", "introduction"],
-	posts: [],
+	posts: ["something"],
 };
 
 export { sorting };

@@ -1,4 +1,5 @@
 <script>
+	import { queryContent, getCategoriesAndPages } from "$lib/index.js";
 	import { t, locales, locale } from "$lib/translations";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
@@ -10,11 +11,9 @@
 		resetMode,
 	} from "mode-watcher";
 	import Icon from "@iconify/svelte";
-	import { onNavigate, invalidateAll } from "$app/navigation";
 	import "../../app.pcss";
 	import { Hamburger } from "svelte-hamburgers";
-	import { onMount } from "svelte";
-
+	import tree from "/src/static/tree.webp";
 	// onNavigate((navigation) => {
 	// 	if (!document.startViewTransition) return;
 
@@ -40,32 +39,6 @@
 	}
 	function closeSearch() {
 		search = false;
-	}
-
-	function queryContent(combinedContent, category, page, lang) {
-		const result = [];
-
-		for (const [categoryKey, categoryObj] of Object.entries(
-			combinedContent,
-		)) {
-			if (category === "*" || categoryKey === category) {
-				for (const [pageKey, pageObj] of Object.entries(
-					categoryObj,
-				)) {
-					if (page === "*" || pageKey === page) {
-						for (const [langKey, langObj] of Object.entries(
-							pageObj,
-						)) {
-							if (lang === "*" || langKey === lang) {
-								result.push(langObj);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return result.length > 0 ? result : [];
 	}
 
 	$: if (data.content) {
@@ -102,16 +75,6 @@
 				.map((item) => item.result);
 		}
 	}
-
-	function getCategoriesAndPages(content) {
-		const result = {};
-
-		for (const [category, pages] of Object.entries(content)) {
-			result[category] = Object.keys(pages);
-		}
-
-		return Object.entries(result);
-	}
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
@@ -126,7 +89,7 @@
 	<a href="/{$locale}">
 		<img
 			class="max-h-12 m-auto"
-			src="/src/static/logo_Marginless.png"
+			src="/src/static/logo.png"
 			alt="winf-logo"
 		/>
 	</a>
@@ -249,7 +212,7 @@
 			<div class="flex flex-row justify-between border my-2 py-2">
 				<div class="max-w-[10rem] flex justify-center items-center">
 					<img
-						src="/src/static/logo_Marginless.png"
+						src="/src/static/logo.png"
 						alt="logo"
 					/>
 				</div>

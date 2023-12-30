@@ -1,8 +1,8 @@
 ---
 title: Just a post
-description: valvlasfjsdjvlavjlkvjlaksjvldsajlvajsl
+description: valvlasfjsdj
 date: 2023-4-14
-published: true
+cover: /src/static/tree.webp
 ---
 
 ## Markdown

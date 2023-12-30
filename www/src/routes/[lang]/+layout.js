@@ -11,8 +11,8 @@ export async function load() {
 	for (const path in paths) {
 		const file = paths[path];
 		const pathParts = path.split("/");
+		const category = pathParts[pathParts.length - 2];
 		const slug = pathParts[pathParts.length - 1]?.split(".")[0];
-
 		if (
 			file &&
 			typeof file === "object" &&
@@ -22,11 +22,8 @@ export async function load() {
 			const { metadata } = file;
 			const langMatch = path.match(/\.(.*?)\./);
 			const lang = langMatch ? langMatch[1] : "";
-			const post = { ...metadata, slug, lang };
-
-			if (post.published) {
-				content.push(post);
-			}
+			const post = { ...metadata, slug, category, lang };
+			content.push(post);
 		}
 	}
 

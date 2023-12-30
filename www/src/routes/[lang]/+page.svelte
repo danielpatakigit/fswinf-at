@@ -1,5 +1,11 @@
 <script>
+	import { queryContent } from "$lib/index.js";
+	import { t, locales, locale } from "$lib/translations";
+
 	import Icon from "@iconify/svelte";
+	export let data;
+
+	$: posts = queryContent(data.content, "posts", "*", $locale);
 </script>
 
 <section class="bg-green-200">
@@ -9,13 +15,14 @@
 				Fachschaft Wirtschaftsinformatik und Data Science
 			</h1>
 			<h2>
-				und Studienvertretung für Wirtschaftsinformatik und Data
-				Science an der TU Wien
+				<pre>
+					{JSON.stringify(data.content, null, " ")}
+				</pre>
 			</h2>
 		</div>
 		<div>
 			<img
-				src="/src/static/favicon.png"
+				src="/src/static/tree.webp"
 				alt="placeholder"
 			/>
 		</div>
@@ -27,10 +34,14 @@
 			<h2 class="text-xl font-bold">Posts</h2>
 		</div>
 		<div class="grid grid-cols-3 gap-4 grid-rows-3 grid-flow-col">
-			{#each Array(7) as _, i}
-				<div class={i === 0 ? "row-span-3" : ""}>
-					Lorem ipsum dolor sit. {i}
-				</div>
+			{#each posts as post, i}
+				<pre class={i === 0 ? "row-span-3" : ""}>
+{JSON.stringify(post, null, "  ")}
+				</pre>
+				<img
+					src={post.cover}
+					alt="coverimg"
+				/>
 			{/each}
 		</div>
 	</article>

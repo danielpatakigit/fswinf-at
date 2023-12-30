@@ -2,8 +2,6 @@
 title: Introduction
 description: First post.
 date: 2023-4-14
-# cover: placeholder.jpg
-published: true
 ---
 
 # What is Lorem Ipsum?
@@ -12,4 +10,4 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 #Hey friends! 👋
 
-![faviconImage](/src/static/favicon.png)
+![faviconImage](/src/static/logo.png)

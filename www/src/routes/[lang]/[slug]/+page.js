@@ -12,8 +12,9 @@ export async function load({ params }) {
 
 			return {
 				status: 200,
-				content: file.default,
+				page: file.default,
 				meta: file.metadata,
+				category: category,
 			};
 		} catch (e) {
 			// File not found in the current category, continue to the next one
