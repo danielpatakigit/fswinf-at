@@ -5,25 +5,31 @@
 	import Icon from "@iconify/svelte";
 	export let data;
 
-	$: allContent = queryContent(data.content, "posts", "*", $locale);
-	$: hero = allContent[0];
-	$: posts = allContent.slice(1, 7);
+	$: allPosts = queryContent(data.content, "posts", "*", $locale);
+	$: hero = allPosts[0];
+	$: posts = allPosts.slice(1, 7);
 </script>
 
 <section class="bg-green-200">
-	<article class="py-24 grid grid-cols-2 gap-4">
+	<article class="py-24 grid grid-cols-1 md:grid-cols-2 gap-4">
 		<div class="">
 			<img
 				src={hero.cover}
 				alt="placeholder"
 			/>
 		</div>
-		<div class="flex gap-4 flex-col">
-			<div>
+		<div class="flex gap-4 flex-col text-center md:text-left">
+			<div class="flex flex-col gap-4">
 				<h1 class="text-2xl font-bold">
 					{hero.title}
 				</h1>
 				<p>{hero.description}</p>
+				<a
+					href="/{$locale}/{hero.slug}"
+					class="px-4 py-2 w-min bg-black text-white rounded-full font-bold"
+				>
+					About
+				</a>
 			</div>
 			<div class="">
 				<h2 class="font-bold">Statistics</h2>
@@ -41,15 +47,28 @@
 </section>
 
 <section>
-	<article>
-		<div class="border-b-2 py-4">
-			<h2 class="text-xl font-bold">Posts</h2>
+	<article class="mb-12">
+		<div class="border-b-2 py-3 mt-2">
+			<h2 class="text-xl font-bold">
+				<a
+					href="/{$locale}/{hero.slug}"
+					class=" flex items-center gap-1"
+				>
+					<span>Posts</span>
+					<Icon
+						icon="mdi-chevron-right"
+						class="text-xl"
+					/>
+				</a>
+			</h2>
 		</div>
-		<div class="grid grid-cols-3 gap-4 grid-rows-3 grid-flow-dense">
+		<div
+			class="mt-4 grid grid-cols-1 gap-y-12 sm:grid-cols-2 md:grid-cols-3 gap-6"
+		>
 			{#each posts as post, i}
 				<a
 					href="/{$locale}/{post.slug}"
-					class="flex flex-col gap-4"
+					class="flex flex-col gap-3 shadow-md"
 				>
 					{#if post.cover}
 						<img
@@ -65,7 +84,7 @@
 						/>
 					{/if}
 
-					<div class="flex flex-col gap-2">
+					<div class="flex flex-col gap-2 p-2">
 						<h2 class="font-bold text-xl text-black">
 							{post.title}
 						</h2>
@@ -80,6 +99,18 @@
 					</div>
 				</a>
 			{/each}
+		</div>
+		<div class="flex justify-center items-center mt-6">
+			<a
+				href="/{$locale}/{hero.slug}"
+				class="border-2 rounded-full py-2 px-4 shadow-sm flex items-center gap-1"
+			>
+				<span class="font-bold">All posts</span>
+				<Icon
+					icon="mdi-chevron-right"
+					class="text-xl"
+				/>
+			</a>
 		</div>
 	</article>
 </section>

@@ -12,9 +12,11 @@
 	} from "mode-watcher";
 	import Icon from "@iconify/svelte";
 	import "../../app.pcss";
-	import { Hamburger } from "svelte-hamburgers";
+	import j from "jquery";
+	import { afterUpdate, onMount } from "svelte";
 
 	export let data;
+
 	let socials = [
 		{
 			name: "Instagram",
@@ -37,11 +39,35 @@
 			icon: "mdi:linkedin",
 		},
 	];
+	let scrollPercentage = 0;
+	let outerHeight;
+	let innerHeight;
+	let scrollY;
 
+	function calculateScrollPercentage() {
+		scrollPercentage = (
+			scrollY.toFixed(0) /
+			(j(document).height() - 800)
+		).toFixed(2);
+	}
+
+	j(document).scroll(() => {
+		calculateScrollPercentage();
+	});
+	onMount(() => {
+		calculateScrollPercentage();
+	});
+
+	// Update scroll percentage on scroll event
 	$: ({ route } = $page.data);
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
+<svelte:window
+	bind:outerHeight
+	bind:scrollY
+	bind:innerHeight
+/>
 
 <header class="min-h-[3rem] relative flex justify-between">
 	<div
@@ -98,7 +124,7 @@
 		</button> -->
 	</div>
 </header>
-<nav class="mt-4 py-2 flex flex-row w-full justify-around border-b-4">
+<nav class="mt-4 py-2 flex flex-row w-full justify-around">
 	{#each getCategoriesAndPages(data.content) as [category, pages]}
 		<a
 			href="/{$locale}/{pages[0] ? pages[0] : ''}"
@@ -108,6 +134,15 @@
 		</a>
 	{/each}
 </nav>
+<div class="bg-gray-200 h-1 sticky top-0 z-40">
+	<div
+		class="h-full bg-green-400 transition-all rounded-r-full"
+		style="width: {scrollPercentage * 100 < 8
+			? 0
+			: scrollPercentage * 110}%;"
+		value={scrollPercentage}
+	></div>
+</div>
 
 <main>
 	<slot />
