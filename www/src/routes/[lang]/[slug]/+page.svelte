@@ -4,23 +4,47 @@
 	import { t, locales, locale } from "$lib/translations";
 	import { afterUpdate, onMount, tick } from "svelte";
 	import j from "jquery";
+	import Icon from "@iconify/svelte";
 
 	export let data;
 	$: pages = queryContent(data.content, data.category, "*", $locale);
+
+	$: currentPage = queryContent(
+		data.content,
+		data.category,
+		$page.params.slug,
+		$locale,
+	)[0];
+
+	// $: currIndex = pages.findIndex(
+	// 	(obj) => obj.slug === currentPage.slug,
+	// );
+
+	let menu = false;
+
 	let anchorLinks = [];
+
+	onMount(() => {
+		// Use tick to ensure that the scroll happens after the DOM update
+		tick().then(() => {
+			scrollToHash();
+		});
+	});
+
 	afterUpdate(() => {
 		window.js = j;
+		// Find prev and next articles
 		// Build the hashmarks and the on this page list
 		anchorLinks = [];
 
 		// Clear existing hash elements
-		j("div#page-content h2 a.anchor-hash").remove();
+		j("div#pc h2 a.anchor-hash").remove();
 
-		j("div#page-content h2").each(function () {
+		j("div#pc h2").each(function () {
 			const text = j(this).text();
 			const slug = text.toLowerCase().replace(/\s+/g, "-");
 
-			j(this).addClass("relative group");
+			j(this).addClass("relative group w-fit");
 
 			const anchor = {};
 			anchor["text"] = text;
@@ -32,7 +56,7 @@
 				.attr("id", slug)
 				.attr("href", "#" + slug)
 				.addClass(
-					"absolute left-[-20px] opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity anchor-hash",
+					"absolute right-[-20px] md:left-[-20px] md:right-0 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity anchor-hash",
 				);
 
 			j(this).append(hash);
@@ -53,13 +77,6 @@
 					500,
 				);
 			}
-		});
-	});
-
-	onMount(() => {
-		// Use tick to ensure that the scroll happens after the DOM update
-		tick().then(() => {
-			scrollToHash();
 		});
 	});
 
@@ -95,22 +112,43 @@
 
 <section>
 	<article
-		class=" grid grid-cols-[150px_auto_150px] gap-6 mb-24 mt-6"
+		class=" grid lg:grid-cols-[1.5fr_5fr_1.5fr] grid-cols-1 gap-6 mb-24 mt-6"
 	>
 		<!-- Title -->
-		<ul class="sticky top-0 flex flex-col gap-4 text-sm pt-2 h-min">
-			<h3 class="capitalize font-bold">{data.category}</h3>
-			<div class="flex flex-col">
-				{#each pages as anchor}
-					<a
-						class="{$page.params.slug === anchor.slug
-							? 'font-medium border-l-2 border-gray-400 '
-							: ' font-light border-l-2 '}   pl-4 ml-2 py-2"
-						href={anchor.slug}
-					>
-						{anchor.title}
-					</a>
-				{/each}
+		<ul
+			class="{menu
+				? ''
+				: 'translate-x-56'} lg:translate-x-0 fixed right-0 top-0 w-64 lg:w-auto h-screen z-50 lg:sticky lg:h-min flex lg:z-0 flex-row text-sm transition-all"
+		>
+			<button
+				class="bg-white h-24 w-auto shadow-sm mt-36 p-1 rounded-l-2xl border flex justify-center items-center lg:hidden"
+				on:click={() => {
+					menu = !menu;
+				}}
+			>
+				<Icon
+					icon={menu ? "mdi:chevron-right" : "mdi:menu"}
+					class="{menu
+						? ''
+						: 'rotate-0'} text-3xl transition-transform"
+				></Icon>
+			</button>
+			<div
+				class="border-l-2 lg:border-0 border-gray-200 shadow-sm lg:shadow-none bg-white px-4 pt-4 w-full"
+			>
+				<h3 class="capitalize font-bold">{data.category}</h3>
+				<div class="flex flex-col pt-2">
+					{#each pages as anchor}
+						<a
+							class="{$page.params.slug === anchor.slug
+								? 'font-medium border-l-2 border-gray-400 '
+								: ' font-light border-l-2 '}   pl-3 ml-1 py-2"
+							href={anchor.slug}
+						>
+							{anchor.title}
+						</a>
+					{/each}
+				</div>
 			</div>
 		</ul>
 		<div>
@@ -134,14 +172,19 @@
 					<span>{"x"} minute read</span>
 				</div>
 			</hgroup>
-			<div id="page-content">
+			<div
+				id="pc"
+				class="page-content"
+			>
 				<svelte:component this={data.page} />
 			</div>
 		</div>
-		<ul class="flex flex-col gap-4 text-sm pt-2 sticky h-min top-0">
+		<ul
+			class="lg:flex flex-col text-sm pt-4 sticky h-min top-0 hidden"
+		>
 			<h3 class="capitalize font-bold">On this page</h3>
 			<div
-				class="flex flex-col pl-4 ml-2 gap-3 border-l-2"
+				class="flex flex-col pl-3 mt-2 ml-1 gap-3 border-l-2 py-2"
 				id="on-this-page"
 			>
 				{#each anchorLinks as anchor, i}
@@ -156,8 +199,3 @@
 		</ul>
 	</article>
 </section>
-
-<style lang="postcss">
-	h1 {
-	}
-</style>
