@@ -51,11 +51,10 @@
 		).toFixed(2);
 	}
 
-	j(document).scroll(() => {
-		calculateScrollPercentage();
-	});
 	onMount(() => {
-		calculateScrollPercentage();
+		j(window).scroll(() => {
+			calculateScrollPercentage();
+		});
 	});
 
 	// Update scroll percentage on scroll event
