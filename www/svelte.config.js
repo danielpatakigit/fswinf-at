@@ -33,6 +33,7 @@ const config = {
 		prerender: {
 			crawl: true,
 			entries: ["/en", "/de", "*"],
+			handleHttpError: "warn",
 		},
 	},
 };
