@@ -40,8 +40,6 @@
 		},
 	];
 	let scrollPercentage = 0;
-	let outerHeight;
-	let innerHeight;
 	let scrollY;
 
 	function calculateScrollPercentage() {
@@ -62,11 +60,7 @@
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
-<svelte:window
-	bind:outerHeight
-	bind:scrollY
-	bind:innerHeight
-/>
+<svelte:window bind:scrollY />
 
 <header class="min-h-[3rem] relative flex justify-between">
 	<div

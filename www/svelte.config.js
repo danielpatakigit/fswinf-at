@@ -1,4 +1,4 @@
-import adapter from "@sveltejs/adapter-static";
+import adapter from "@sveltejs/adapter-auto";
 import { mdsvex } from "mdsvex";
 import { vitePreprocess } from "@sveltejs/kit/vite";
 import { importAssets } from "svelte-preprocess-import-assets";
