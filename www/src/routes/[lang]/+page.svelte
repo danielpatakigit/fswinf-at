@@ -11,15 +11,15 @@
 </script>
 
 <section class="bg-green-200">
-	<article class="py-24 grid grid-cols-1 md:grid-cols-2 gap-4">
-		<div class="">
+	<article class="py-24 grid grid-cols-1 gap-12">
+		<div class="max-w-80 mx-auto">
 			<img
 				src={hero.cover}
 				alt="placeholder"
 			/>
 		</div>
-		<div class="flex gap-4 flex-col text-center md:text-left">
-			<div class="flex flex-col gap-4">
+		<div class="flex gap-4 flex-col text-center">
+			<div class="flex flex-col gap-4 items-center">
 				<h1 class="text-2xl font-bold">
 					{hero.title}
 				</h1>

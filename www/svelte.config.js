@@ -3,10 +3,13 @@ import adapter from "@sveltejs/adapter-auto";
 import { mdsvex } from "mdsvex";
 import { vitePreprocess } from "@sveltejs/kit/vite";
 import { importAssets } from "svelte-preprocess-import-assets";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: [".md"],
+	rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
 };
 
 /** @type {import('@sveltejs/kit').Config} */

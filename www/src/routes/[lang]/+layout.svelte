@@ -41,12 +41,22 @@
 	];
 	let scrollPercentage = 0;
 	let scrollY;
+	let innerHeight;
 
 	function calculateScrollPercentage() {
-		scrollPercentage = (
+		const temp = (
 			scrollY.toFixed(0) /
-			(j(document).height() - 800)
+			(j(document).height() - innerHeight)
 		).toFixed(2);
+
+		scrollPercentage = temp > 1 ? 1 : temp;
+		// if percentage is smaller then 10 or bigger than 90 snap to either 0 or 100 to avoid lagg from the scroll function
+		scrollPercentage =
+			scrollPercentage * 100 < 8
+				? 0
+				: scrollPercentage * 100 > 90
+					? 100
+					: scrollPercentage * 100;
 	}
 
 	onMount(() => {
@@ -60,7 +70,10 @@
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
-<svelte:window bind:scrollY />
+<svelte:window
+	bind:scrollY
+	bind:innerHeight
+/>
 
 <header class="min-h-[3rem] relative flex justify-between">
 	<div
@@ -130,10 +143,7 @@
 <div class="bg-gray-200 h-1 sticky top-0 z-40">
 	<div
 		class="h-full bg-green-400 transition-all rounded-r-full"
-		style="width: {scrollPercentage * 100 < 8
-			? 0
-			: scrollPercentage * 110}%;"
-		value={scrollPercentage}
+		style="width: {scrollPercentage}%;"
 	></div>
 </div>
 
