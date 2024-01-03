@@ -23,11 +23,8 @@
 	onMount(() => {});
 
 	afterUpdate(() => {
-		console.log("update");
 		anchorLinks = updatePageContentsList();
 		pageTriplet = updateNeighboringPages();
-		console.log(pageTriplet);
-		console.log(anchorLinks);
 	});
 
 	function updateNeighboringPages() {
@@ -199,16 +196,14 @@
 				class="flex flex-col pl-3 mt-2 ml-1 gap-3 border-l-2 py-2"
 				id="on-this-page"
 			>
-				{#if anchorLinks}
-					{#each anchorLinks as anchor, i}
-						<a
-							class="font-light"
-							href={anchor.href}
-						>
-							{anchor.text}
-						</a>
-					{/each}
-				{/if}
+				{#each anchorLinks as anchor, i}
+					<a
+						class="font-light"
+						href={anchor.href}
+					>
+						{anchor.text}
+					</a>
+				{/each}
 			</div>
 		</ul>
 	</article>

@@ -79,7 +79,7 @@
 					{:else}
 						<img
 							class="aspect-video object-cover"
-							src="/src/static/logo.png"
+							src="/logo.png"
 							alt="coverimg"
 						/>
 					{/if}

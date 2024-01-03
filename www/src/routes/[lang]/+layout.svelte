@@ -91,7 +91,7 @@
 	<a href="/{$locale}">
 		<img
 			class="max-h-12 m-auto"
-			src="/src/static/logo.png"
+			src="/logo.png"
 			alt="winf-logo"
 		/>
 	</a>
@@ -171,7 +171,7 @@
 			>
 				<div class="max-w-[10rem] flex justify-center items-center">
 					<img
-						src="/src/static/logo.png"
+						src="/logo.png"
 						alt="logo"
 					/>
 				</div>
