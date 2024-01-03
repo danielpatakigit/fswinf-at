@@ -2,7 +2,7 @@
 title: Just a post
 description: valvlasfjsdjvlavjlkvjlaksjvldsajlvajsl
 date: 2023-4-14
-cover: /src/static/favicon.png
+cover: /favicon.png
 ---
 
 ## Markdown GERMAN GERMAN

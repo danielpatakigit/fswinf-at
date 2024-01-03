@@ -36,29 +36,29 @@
 
 #pc h1 {
 	/* warning color applied if h1 was used in markdown */
-	@apply mb-2 border-4 border-dashed border-black bg-red-600 py-1 font-bold italic line-through;
+	@apply relative mb-2 border-4 border-dashed border-black bg-red-600 py-1 font-bold italic line-through;
 }
 
 /* h1 is already styled on the page */
 
 #pc h2 {
-	@apply my-3 text-2xl font-bold;
+	@apply relative my-3 text-2xl font-bold;
 }
 
 #pc h3 {
-	@apply my-2 text-xl font-bold;
+	@apply relative my-2 text-xl font-bold;
 }
 
 #pc h4 {
-	@apply my-2 text-lg font-bold;
+	@apply relative my-2 text-lg font-bold;
 }
 
 #pc h5 {
-	@apply my-2 text-base font-bold;
+	@apply relative my-2 text-base font-bold;
 }
 
 #pc h6 {
-	@apply my-2 text-sm font-bold;
+	@apply relative my-2 text-sm font-bold;
 }
 
 #pc p {
@@ -115,6 +115,14 @@
 /* Links */
 #pc a {
 	@apply text-blue-500;
+}
+
+#pc :not(h1) .icon.icon-link::before {
+	@apply absolute -left-5 opacity-0 content-['#'] hover:opacity-100;
+}
+
+#pc :is(h2, h3, h4, h5, h6):hover .icon.icon-link::before {
+	@apply opacity-100;
 }
 /* Prism */
 

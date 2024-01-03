@@ -34,6 +34,8 @@
 	"dependencies": {
 		"@sveltejs/adapter-auto": "^3.0.1",
 		"@tailwindcss/line-clamp": "^0.4.4",
-		"jquery": "^3.7.1"
+		"jquery": "^3.7.1",
+		"rehype-autolink-headings": "^7.1.0",
+		"rehype-slug": "^6.0.0"
 	}
 }

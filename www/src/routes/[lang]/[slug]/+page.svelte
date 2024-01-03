@@ -5,17 +5,12 @@
 	import { afterUpdate, onMount, tick } from "svelte";
 	import j from "jquery";
 	import Icon from "@iconify/svelte";
+	import { navigating } from "$app/stores";
 
 	export let data;
 	$: pages = queryContent(data.content, data.category, "*", $locale);
 
-	$: currentPage = queryContent(
-		data.content,
-		data.category,
-		$page.params.slug,
-		$locale,
-	)[0];
-
+	// $:
 	// $: currIndex = pages.findIndex(
 	// 	(obj) => obj.slug === currentPage.slug,
 	// );
@@ -23,77 +18,53 @@
 	let menu = false;
 
 	let anchorLinks = [];
+	let pageTriplet = {};
 
-	onMount(() => {
-		// Use tick to ensure that the scroll happens after the DOM update
-		tick().then(() => {
-			scrollToHash();
-		});
-	});
+	onMount(() => {});
 
 	afterUpdate(() => {
-		window.js = j;
-		// Find prev and next articles
-		// Build the hashmarks and the on this page list
-		anchorLinks = [];
-
-		// Clear existing hash elements
-		j("div#pc h2 a.anchor-hash").remove();
-
-		j("div#pc h2").each(function () {
-			const text = j(this).text();
-			const slug = text.toLowerCase().replace(/\s+/g, "-");
-
-			j(this).addClass("relative group w-fit");
-
-			const anchor = {};
-			anchor["text"] = text;
-			anchor["href"] = "#" + slug;
-			anchorLinks = [...anchorLinks, anchor];
-
-			const hash = j("<a>")
-				.text("#")
-				.attr("id", slug)
-				.attr("href", "#" + slug)
-				.addClass(
-					"absolute right-[-20px] md:left-[-20px] md:right-0 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity anchor-hash",
-				);
-
-			j(this).append(hash);
-		});
-
-		// Use event delegation for the "On this page" links
-		j("#on-this-page").on("click", "a", function (event) {
-			event.preventDefault(); // Prevent the default behavior
-
-			const targetId = j(this).attr("href").substring(1); // Remove the "#" from the href
-			const targetElement = j("#" + targetId);
-
-			if (targetElement.length) {
-				j("html, body").animate(
-					{
-						scrollTop: targetElement.offset().top,
-					},
-					500,
-				);
-			}
-		});
+		anchorLinks = updatePageContentsList();
+		pageTriplet = updateNeighboringPages();
 	});
 
-	function scrollToHash() {
-		if (window.location.hash) {
-			const id = window.location.hash.substring(1);
-			const targetElement = j("#" + id);
+	function updateNeighboringPages() {
+		const array = queryContent(
+			data.content,
+			data.category,
+			"*",
+			$locale,
+		);
+		const currentPage = queryContent(
+			data.content,
+			data.category,
+			$page.params.slug,
+			$locale,
+		)[0];
+		const index = array.findIndex(
+			(element) => element === currentPage,
+		);
 
-			if (targetElement.length) {
-				j("html, body").animate(
-					{
-						scrollTop: targetElement.offset().top,
-					},
-					500,
-				);
-			}
+		if (index === -1) {
+			// Element not found in the array
+			return null;
 		}
+
+		const previousPage = array[index - 1] || null;
+		const nextPage = array[index + 1] || null;
+
+		return { previousPage, currentPage, nextPage };
+	}
+
+	function updatePageContentsList() {
+		const headers = j("h2, h3, h4, h5, h6");
+		const newArray = [];
+		headers.each(function (i, item) {
+			const href = "#" + item.id;
+			const text = item.innerText;
+			newArray.push({ href, text });
+		});
+
+		return newArray;
 	}
 </script>
 
@@ -136,7 +107,9 @@
 			<div
 				class="border-l-2 lg:border-0 border-gray-200 shadow-sm lg:shadow-none bg-white px-4 pt-4 w-full"
 			>
-				<h3 class="capitalize font-bold">{data.category}</h3>
+				<span class="uppercase font-bold tracking-widest">
+					{data.category}
+				</span>
 				<div class="flex flex-col pt-2">
 					{#each pages as anchor}
 						<a
@@ -178,11 +151,47 @@
 			>
 				<svelte:component this={data.page} />
 			</div>
+
+			<div
+				class="flex flex-col gap-4 mt-8 border-t-2 border-gray-400"
+			>
+				<div>
+					<!-- <span>
+						You just finished reading: {pageTriplet.currentPage
+							?.title}
+					</span> -->
+				</div>
+
+				<div class="flex justify-between">
+					{#each [pageTriplet.previousPage, pageTriplet.nextPage] as page, i}
+						{#if page}
+							<a
+								href="/{$locale}/{page.slug}"
+								class="flex flex-row gap-1 text-gray-600 items-center justify-center border rounded-lg border-gray-400 px-4 py-2"
+							>
+								<div class="{i == 0 ? '' : 'order-2'} ">
+									<Icon
+										icon="gravity-ui:chevron-right"
+										class="{i == 0 ? 'rotate-180' : ''} text-xl"
+									></Icon>
+								</div>
+								<div>
+									<span class="font-medium">
+										{page.title}
+									</span>
+								</div>
+							</a>
+						{:else}
+							<div></div>
+						{/if}
+					{/each}
+				</div>
+			</div>
 		</div>
 		<ul
 			class="lg:flex flex-col text-sm pt-4 sticky h-min top-0 hidden"
 		>
-			<h3 class="capitalize font-bold">On this page</h3>
+			<span class="capitalize font-bold">On this page</span>
 			<div
 				class="flex flex-col pl-3 mt-2 ml-1 gap-3 border-l-2 py-2"
 				id="on-this-page"

@@ -2,7 +2,7 @@
 title: Just a post 1
 description: valvlasfjsdj
 date: 2023-4-14
-cover: /src/static/tree.webp
+cover: /tree.webp
 ---
 
 ## Markdown
