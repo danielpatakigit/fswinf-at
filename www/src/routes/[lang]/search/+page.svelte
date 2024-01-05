@@ -72,7 +72,7 @@
 		</div>
 		<div
 			id="results"
-			class="grid grid-cols-3 gap-4"
+			class="grid grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] gap-4"
 		>
 			{#each results as result, i}
 				<a
@@ -87,8 +87,8 @@
 					</p>
 					<div class="mt-auto pt-2 flex gap-2 text-xs text-green-600">
 						<span>{result.date}</span>
-						<span>•</span>
-						<span>{i} minute read</span>
+						<!-- <span>•</span>
+						<span>{i} minute read</span> -->
 					</div>
 				</a>
 			{/each}

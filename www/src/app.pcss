@@ -10,7 +10,8 @@
 	/* Scrollbar styling */
 	/* width */
 	::-webkit-scrollbar {
-		width: 6px;
+		width: 7px;
+		height: 4px;
 	}
 
 	/* Track */
@@ -19,10 +20,12 @@
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
-		@apply rounded-full bg-gray-200;
+		@apply rounded-full bg-gray-300;
 	}
 
 	body {
+		overflow-y: auto;
+		scrollbar-gutter: none;
 		font-family: "Inter", sans-serif;
 	}
 

@@ -21,7 +21,7 @@ const config = {
 	},
 };
 
-export const defaultLocale = "en";
+export const defaultLocale = "de";
 
 export const {
 	t,

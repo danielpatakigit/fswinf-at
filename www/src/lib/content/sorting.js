@@ -12,8 +12,8 @@ const sorting = {
 		"thepost4",
 		"thepost5",
 	],
-	// contact: [],
-	// about: [],
+	contact: [],
+	about: [],
 	// services: [],
 };
 

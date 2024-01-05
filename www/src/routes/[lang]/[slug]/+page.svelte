@@ -15,7 +15,16 @@
 	// 	(obj) => obj.slug === currentPage.slug,
 	// );
 
-	let menu = false;
+	let menuOpen = false;
+	let menuContainer;
+
+	function onWindowClick(e) {
+		if (!menuContainer.contains(e.target)) menuOpen = false;
+	}
+
+	function onMenuClick() {
+		menuOpen = !menuOpen;
+	}
 
 	let anchorLinks = [];
 	let pageTriplet = {};
@@ -81,33 +90,36 @@
 	/>
 </svelte:head>
 
+<svelte:window on:click={onWindowClick} />
+
 <section>
 	<article
-		class=" grid lg:grid-cols-[1.5fr_5fr_1.5fr] grid-cols-1 gap-6 mb-24 mt-6"
+		class=" grid lg:grid-cols-[1.5fr_5fr_1.5fr] grid-cols-1 gap-6 mb-24 mt-12"
 	>
 		<!-- Title -->
 		<ul
-			class="{menu
+			bind:this={menuContainer}
+			class="{menuOpen
 				? ''
-				: 'translate-x-56'} lg:translate-x-0 fixed right-0 top-0 w-64 lg:w-auto h-screen z-50 lg:sticky lg:h-min flex lg:z-0 flex-row text-sm transition-all"
+				: 'translate-x-[85%]'} pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex"
 		>
 			<button
-				class="bg-white h-24 w-auto shadow-sm mt-36 p-1 rounded-l-2xl border flex justify-center items-center lg:hidden"
-				on:click={() => {
-					menu = !menu;
-				}}
+				class="bg-white h-24 w-auto max-w-12 ml-auto shadow-md px-2 rounded-l-2xl self-center border flex justify-center items-center lg:hidden"
+				on:click={onMenuClick}
 			>
 				<Icon
-					icon={menu ? "mdi:chevron-right" : "mdi:menu"}
-					class="{menu
+					icon={menuOpen ? "mdi:chevron-right" : "mdi:menu"}
+					class="{menuOpen
 						? ''
-						: 'rotate-0'} text-3xl transition-transform"
+						: ''} text-2xl text-gray-400 transition-transform"
 				></Icon>
 			</button>
 			<div
-				class="border-l-2 lg:border-0 border-gray-200 shadow-sm lg:shadow-none bg-white px-4 pt-4 w-full"
+				class="border-l-2 lg:border-0 border-gray-100 shadow-xl lg:shadow-none bg-white px-4 pt-4 w-full font-semibold flex flex-col"
 			>
-				<span class="uppercase font-bold tracking-widest">
+				<span class="mx-auto lg:hidden text-xl">Navigate</span>
+				<hr class="lg:hidden my-2 mb-4" />
+				<span class="mx-auto lg:m-0 uppercase tracking-widest">
 					{data.category}
 				</span>
 				<div class="flex flex-col pt-2">
@@ -141,8 +153,8 @@
 				<h1 class="text-3xl font-bold">{data.meta.title}</h1>
 				<div class="mt-auto pt-2 flex gap-2 text-xs text-green-600">
 					<span>{data.meta.date}</span>
-					<span>•</span>
-					<span>{"x"} minute read</span>
+					<!-- <span>•</span> -->
+					<!-- <span>{"x"} minute read</span> -->
 				</div>
 			</hgroup>
 			<div
@@ -153,15 +165,8 @@
 			</div>
 
 			<div
-				class="flex flex-col gap-4 mt-8 border-t-2 border-gray-400"
+				class="flex flex-col gap-4 mt-8 pt-8 border-t border-gray-300"
 			>
-				<div>
-					<!-- <span>
-						You just finished reading: {pageTriplet.currentPage
-							?.title}
-					</span> -->
-				</div>
-
 				<div class="flex justify-between">
 					{#each [pageTriplet.previousPage, pageTriplet.nextPage] as page, i}
 						{#if page}
