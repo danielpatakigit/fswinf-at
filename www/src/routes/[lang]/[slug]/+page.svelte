@@ -5,7 +5,6 @@
 	import { afterUpdate, onMount, tick } from "svelte";
 	import j from "jquery";
 	import Icon from "@iconify/svelte";
-	import { navigating } from "$app/stores";
 
 	export let data;
 	$: pages = queryContent(data.content, data.category, "*", $locale);
