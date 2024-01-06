@@ -86,104 +86,106 @@
 	on:click={onWindowClick}
 />
 
-<header
-	class="flex justify-between relative gap-4 px-2 pt-1 pb-1 shadow-lg"
->
-	<a
-		href="/{$locale}"
-		class="flex items-center min-w-fit justify-center absolute md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none md:inset-auto
-		"
+<header class="w-full relative dark:bg-gray-950">
+	<article
+		class="flex justify-between gap-4 px-2 pt-1 pb-1 shadow-sm"
 	>
-		<img
-			class="h-10 m-auto"
-			src="/logo.png"
-			alt="winf-logo"
-		/>
-	</a>
-
-	<nav
-		class="absolute bg-white left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
-	>
-		{#each getCategoriesAndPages(data.content) as [category, pages]}
-			<a
-				href="/{$locale}/{pages[0] ? pages[0] : ''}"
-				class="{pages[0]
-					? 'hover:bg-gray-100'
-					: 'line-through'} capitalize px-2
-				sm:px-4 py-2 font-medium rounded-md"
-			>
-				{category}
-			</a>
-		{/each}
-	</nav>
-	<div
-		bind:this={settingsContainer}
-		class="relative flex flex-row bg-white ml-auto gap-2"
-	>
-		<button
-			tabindex="0"
-			on:click={onSettingsClick}
-			class="flex gap-2 border-2 px-2 sm:px-4 py-2 font-semibold rounded-md hover:bg-gray-100"
+		<a
+			href="/{$locale}"
+			class="flex items-center min-w-fit justify-center absolute md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none md:inset-auto
+			"
 		>
-			<span class="hidden sm:block">Settings</span>
-			<Icon
-				icon="quill:cog"
-				class="text-2xl z-50"
-			></Icon>
-		</button>
+			<img
+				class="h-10 m-auto"
+				src="/logo.png"
+				alt="winf-logo"
+			/>
+		</a>
+		<nav
+			class="absolute bg-white dark:bg-gray-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
+		>
+			{#each getCategoriesAndPages(data.content) as [category, pages]}
+				<a
+					href="/{$locale}/{pages[0] ? pages[0] : ''}"
+					class="{pages[0]
+						? 'hover:bg-gray-100 dark:hover:bg-gray-800'
+						: 'line-through'} capitalize px-2
+					sm:px-4 py-2 font-medium rounded-md"
+				>
+					{category}
+				</a>
+			{/each}
+		</nav>
 		<div
-			class="{settingsOpen
-				? 'visible'
-				: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border bg-white *:flex *:items-center *:gap-2 *:w-full *:h-10 hover:*:bg-gray-200 *:rounded-md *:p-2"
+			bind:this={settingsContainer}
+			class="relative flex flex-row bg-white dark:bg-gray-900 ml-auto gap-2"
 		>
 			<button
-				on:click={toggleMode}
-				class=""
+				tabindex="0"
+				on:click={onSettingsClick}
+				class="flex gap-2 border-2 dark:border-gray-600 px-2 sm:px-4 py-2 font-semibold rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
 			>
+				<span class="hidden sm:block">Settings</span>
 				<Icon
-					icon={"mdi:theme-light-dark"}
-					class="text-xl"
+					icon="quill:cog"
+					class="text-2xl z-50"
 				></Icon>
-				<span>Light Mode</span>
 			</button>
-			<a
-				href="/{$locale}/search"
-				class=""
+			<div
+				class="{settingsOpen
+					? 'visible'
+					: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border dark:border-gray-600 bg-white dark:bg-gray-900 *:flex *:items-center *:gap-2 *:w-full *:h-10 hover:*:bg-gray-200 dark:hover:*:bg-gray-800 *:rounded-md *:p-2"
 			>
-				<Icon
-					icon={"mdi:search"}
-					class="text-xl"
-				></Icon>
-				<span>Search</span>
-			</a>
-			<select
-				on:change={({ target }) => {
-					goto(target.value);
-				}}
-			>
-				{#each $locales as lc}
-					<option
-						value="/{lc}{route}"
-						selected={lc === $locale}
-					>
-						{$t(`lang.${lc}`)}
-					</option>
-				{/each}
-			</select>
-			<!-- <div
-				class="flex gap-2 flex-row items-center justify-center text-xl"
-			>
-				{#each socials as social, i}
-					<a
-						target="_blank"
-						href={social.url}
-					>
-						<Icon icon={social.icon}></Icon>
-					</a>
-				{/each}
-			</div> -->
+				<button
+					on:click={toggleMode}
+					class=""
+				>
+					<Icon
+						icon={"mdi:theme-light-dark"}
+						class="text-xl"
+					></Icon>
+					<span>Light Mode</span>
+				</button>
+				<a
+					href="/{$locale}/search"
+					class=""
+				>
+					<Icon
+						icon={"mdi:search"}
+						class="text-xl"
+					></Icon>
+					<span>Search</span>
+				</a>
+				<select
+					class="dark:bg-gray-900"
+					on:change={({ target }) => {
+						goto(target.value);
+					}}
+				>
+					{#each $locales as lc}
+						<option
+							value="/{lc}{route}"
+							selected={lc === $locale}
+						>
+							{$t(`lang.${lc}`)}
+						</option>
+					{/each}
+				</select>
+				<!-- <div
+					class="flex gap-2 flex-row items-center justify-center text-xl"
+				>
+					{#each socials as social, i}
+						<a
+							target="_blank"
+							href={social.url}
+						>
+							<Icon icon={social.icon}></Icon>
+						</a>
+					{/each}
+				</div> -->
+			</div>
 		</div>
-	</div>
+	</article>
 </header>
 <div
 	class=" {scrollY > 80
@@ -200,7 +202,7 @@
 	<slot />
 </main>
 
-<section class="bg-gray-200">
+<section class="bg-gray-300 dark:bg-gray-950">
 	<article>
 		<footer class="flex flex-col mt-4 py-4 gap-2">
 			<div
@@ -209,7 +211,7 @@
 				{#each getCategoriesAndPages(data.content) as [category, pages]}
 					<a
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
-						class="capitalize hover:bg-gray-100 py-2 px-2 rounded-md"
+						class="capitalize hover:bg-gray-200 dark:hover:bg-gray-900 py-2 px-2 rounded-md"
 					>
 						{category}
 					</a>
@@ -237,7 +239,7 @@
 					{/each}
 				</div>
 			</div>
-			<div class="text-sm font-light flex gap-4 text-black">
+			<div class="text-sm font-light flex gap-4">
 				<span>Terms of use</span>
 				<span>Privacy Policy</span>
 				<span>Etc.</span>

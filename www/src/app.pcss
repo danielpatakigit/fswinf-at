@@ -9,55 +9,66 @@
 @layer base {
 	/* Scrollbar styling */
 	/* width */
-	::-webkit-scrollbar {
-		width: 7px;
-		height: 4px;
-	}
+}
 
-	/* Track */
-	::-webkit-scrollbar-track {
-	}
+::-webkit-scrollbar {
+	width: 7px;
+	height: 4px;
+}
 
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		@apply rounded-full bg-gray-300;
-	}
+/* Track */
+::-webkit-scrollbar-track {
+}
 
-	body {
-		overflow-y: auto;
-		scrollbar-gutter: none;
-		font-family: "Inter", sans-serif;
-	}
+/* Handle */
+::-webkit-scrollbar-thumb {
+	@apply rounded-full bg-gray-300;
+}
 
-	section {
-		/* @apply mx-auto w-[min(100%,_60rem)]; */
-	}
-	article {
-		@apply mx-auto w-[min(100%,_30rem)]  px-2 sm:w-[min(100%,_38rem)] md:w-[min(100%,_48rem)] lg:w-[min(100%,_65rem)] xl:w-[min(100%,_75rem)];
-	}
+body {
+	overflow-y: auto;
+	scrollbar-gutter: none;
+	font-family: "Inter", sans-serif;
+	@apply dark:bg-gradient-to-r dark:from-gray-950 dark:to-gray-900;
+}
+
+section {
+	/* @apply mx-auto w-[min(100%,_60rem)]; */
+}
+article {
+	@apply mx-auto w-[min(100%,_30rem)]  px-2 sm:w-[min(100%,_38rem)] md:w-[min(100%,_48rem)] lg:w-[min(100%,_65rem)] xl:w-[min(100%,_75rem)];
+}
+
+input {
+	@apply dark:bg-inherit;
+}
+
+a,
+button {
+	@apply transition;
 }
 
 #pc h1 {
 	/* warning color applied if h1 was used in markdown */
-	@apply relative mb-2 border-4 border-dashed border-black bg-red-600 py-1 font-bold italic line-through;
+	@apply relative mb-2 border-4 border-dashed border-black bg-red-600 py-1 text-4xl font-bold italic line-through;
 }
 
 /* h1 is already styled on the page */
 
 #pc h2 {
-	@apply relative my-3 text-2xl font-bold;
+	@apply relative my-3 text-xl font-bold;
 }
 
 #pc h3 {
-	@apply relative my-2 text-xl font-bold;
-}
-
-#pc h4 {
 	@apply relative my-2 text-lg font-bold;
 }
 
-#pc h5 {
+#pc h4 {
 	@apply relative my-2 text-base font-bold;
+}
+
+#pc h5 {
+	@apply relative my-2 text-sm font-bold;
 }
 
 #pc h6 {
@@ -98,7 +109,7 @@
 }
 
 #pc table {
-	@apply w-full table-auto border border-gray-300 bg-white;
+	@apply w-full table-auto border border-gray-300 bg-white dark:bg-gray-700;
 }
 #pc th,
 #pc td {
@@ -107,7 +118,7 @@
 
 /* Inline Code */
 #pc :not(pre) code {
-	@apply rounded bg-gray-200 px-2 py-1;
+	@apply rounded bg-gray-200 px-2 py-1 dark:bg-slate-600;
 }
 
 /* Separators */
@@ -121,7 +132,7 @@
 }
 
 #pc :not(h1) .icon.icon-link::before {
-	@apply absolute -left-5 opacity-0 content-['#'] hover:opacity-100;
+	@apply absolute -left-5 text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100;
 }
 
 #pc :is(h2, h3, h4, h5, h6):hover .icon.icon-link::before {
@@ -132,6 +143,8 @@
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #393a34;
+	@apply dark:text-gray-200;
+
 	font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New",
 		Courier, monospace;
 	direction: ltr;
@@ -177,6 +190,7 @@ pre[class*="language-"] {
 	overflow: auto;
 	border: 1px solid #dddddd;
 	background-color: white;
+	@apply dark:bg-gray-800;
 }
 
 /* Inline code */
@@ -193,6 +207,8 @@ pre[class*="language-"] {
 .token.doctype,
 .token.cdata {
 	color: #999988;
+	@apply dark:text-gray-100;
+
 	font-style: italic;
 }
 
@@ -203,11 +219,13 @@ pre[class*="language-"] {
 .token.string,
 .token.attr-value {
 	color: #e3116c;
+	@apply dark:text-red-600;
 }
 
 .token.punctuation,
 .token.operator {
 	color: #393a34; /* no highlight */
+	@apply dark:text-gray-400;
 }
 
 .token.entity,
@@ -228,6 +246,7 @@ pre[class*="language-"] {
 .token.attr-name,
 .language-autohotkey .token.selector {
 	color: #00a4db;
+	@apply dark:text-yellow-500;
 }
 
 .token.function,
@@ -240,6 +259,7 @@ pre[class*="language-"] {
 .token.selector,
 .language-autohotkey .token.keyword {
 	color: #00009f;
+	@apply dark:text-emerald-500;
 }
 
 .token.important,

@@ -104,7 +104,7 @@
 				: 'translate-x-[85%]'} pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex"
 		>
 			<button
-				class="bg-white h-24 w-auto max-w-12 ml-auto shadow-md px-2 rounded-l-2xl self-center border flex justify-center items-center lg:hidden"
+				class="bg-white dark:bg-gray-800 dark:hover:bg-gray-600 dark:border-gray-700 h-24 w-auto max-w-12 ml-auto shadow-md px-2 rounded-l-2xl self-center border flex justify-center items-center lg:hidden"
 				on:click={onMenuClick}
 			>
 				<Icon
@@ -115,7 +115,7 @@
 				></Icon>
 			</button>
 			<div
-				class="border-l-2 lg:border-0 border-gray-100 shadow-xl lg:shadow-none bg-white px-4 pt-4 w-full font-semibold flex flex-col"
+				class="border-l-2 lg:border-0 border-gray-100 dark:border-gray-700 shadow-xl lg:shadow-none bg-white dark:lg:bg-transparent dark:bg-gray-950 px-4 pt-4 w-full font-semibold flex flex-col"
 			>
 				<span class="mx-auto lg:hidden text-xl">Navigate</span>
 				<hr class="lg:hidden my-2 mb-4" />
@@ -126,8 +126,8 @@
 					{#each pages as anchor}
 						<a
 							class="{$page.params.slug === anchor.slug
-								? 'font-medium border-l-2 border-gray-400 '
-								: ' font-light border-l-2 '}   pl-3 ml-1 py-2"
+								? 'font-medium border-l-2 border-gray-400 dark:border-white '
+								: 'dark:border-gray-500 font-light border-l-2 dark:text-gray-300 text-gray-600'}   pl-3 ml-1 py-3"
 							href={anchor.slug}
 						>
 							{anchor.title}
@@ -140,18 +140,18 @@
 			{#if data.meta.cover}
 				<img
 					class="aspect-video object-cover w-full mb-12"
-					src={data.meta.cover}
-					alt="coverimg"
+					src="/{data.meta.cover}"
+					alt="alt:{data.meta.cover}"
 				/>
 			{/if}
 			<hgroup class="mb-6">
 				<span
-					class="uppercase font-bold tracking-widest text-xs text-gray-600"
+					class="uppercase font-bold tracking-widest text-xs text-gray-600 dark:text-gray-400"
 				>
 					{data.category}
 				</span>
-				<h1 class="text-3xl font-bold">{data.meta.title}</h1>
-				<div class="mt-auto pt-2 flex gap-2 text-xs text-green-600">
+				<h1 class="text-2xl font-bold">{data.meta.title}</h1>
+				<div class="mt-auto pt-2 flex gap-2 text-xs text-green-400">
 					<span>{data.meta.date}</span>
 					<!-- <span>•</span> -->
 					<!-- <span>{"x"} minute read</span> -->
@@ -172,7 +172,7 @@
 						{#if page}
 							<a
 								href="/{$locale}/{page.slug}"
-								class="flex flex-row gap-1 text-gray-600 items-center justify-center border rounded-lg border-gray-400 px-4 py-2"
+								class="flex flex-row gap-1 text-gray-600 items-center justify-center border rounded-lg border-gray-400 px-4 py-2 hover:bg-gray-100 dark:text-white dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800"
 							>
 								<div class="{i == 0 ? '' : 'order-2'} ">
 									<Icon
@@ -198,12 +198,12 @@
 		>
 			<span class="capitalize font-bold">On this page</span>
 			<div
-				class="flex flex-col pl-3 mt-2 ml-1 gap-3 border-l-2 py-2"
+				class="flex flex-col pl-3 mt-2 ml-1 border-l-2 bg-white dark:bg-transparent w-full font-semibold"
 				id="on-this-page"
 			>
 				{#each anchorLinks as anchor, i}
 					<a
-						class="font-light"
+						class="font-light py-3 border-gray-100 dark:border-gray-700"
 						href={anchor.href}
 					>
 						{anchor.text}

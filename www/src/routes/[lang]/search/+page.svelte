@@ -45,7 +45,7 @@
 </script>
 
 <section>
-	<article class="flex gap-4 flex-col mt-12">
+	<article class="flex gap-4 flex-col mt-12 mb-24">
 		<h1 class="text-xl font-bold text-center">Search for anything</h1>
 		<div
 			class="flex flex-row border-2 p-2 border-gray-700 rounded-md gap-4 items-center"
@@ -55,7 +55,7 @@
 				class="text-2xl"
 			></Icon>
 			<input
-				class=" focus-visible:outline-none w-full h-full text-lg text-gray-800"
+				class=" focus-visible:outline-none w-full h-full text-lg text-gray-800 dark:text-white"
 				type="text"
 				placeholder="Search..."
 				bind:value={term}
@@ -77,19 +77,23 @@
 			{#each results as result, i}
 				<a
 					href="/{$locale}/{result.slug}"
-					class=" shadow-md border border-gray-200 p-2 min-h-24 flex flex-col"
+					class=" shadow-md border border-gray-200 dark:border-gray-600 dark:bg-gray-800 p-2 min-h-24 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700 gap-4"
 				>
-					<h2 class="font-bold text-xl text-black">
-						{result.title}
+					<h2 class=" text-xl">
+						<div
+							class="mt-auto pt-2 flex gap-2 text-xs text-green-400"
+						>
+							<span>{result.date}</span>
+							<!-- <span>•</span>
+						<span>{i} minute read</span> -->
+						</div>
+						<span class="font-bold">{result.title}</span>
 					</h2>
-					<p class="font-light text-sm text-gray-400 line-clamp-2">
+					<p
+						class="font-light text-sm text-gray-500 dark:text-gray-200 line-clamp-3"
+					>
 						{result.description}
 					</p>
-					<div class="mt-auto pt-2 flex gap-2 text-xs text-green-600">
-						<span>{result.date}</span>
-						<!-- <span>•</span>
-						<span>{i} minute read</span> -->
-					</div>
 				</a>
 			{/each}
 		</div>

@@ -6,13 +6,23 @@
 	export let data;
 
 	$: allPosts = queryContent(data.content, "posts", "*", $locale);
-	$: hero = allPosts[0];
-	$: posts = allPosts.slice(1, 7);
+	$: posts = allPosts.slice(0, 6);
 </script>
 
-<section class="bg-green-200">
+<section class="bg-gray-100 dark:bg-gray-950">
 	<article class="py-24 grid grid-cols-1 gap-12">
-		<div class="max-w-80 mx-auto">
+		<div>
+			<h1
+				class="text-3xl md:text-5xl leading-9 text-balance font-medium"
+			>
+				Fachschaft Wirtschaftsinformatik und Data Science
+			</h1>
+			<h2 class="mt-2 text-balance md:text-lg">
+				und Studienvertretung für Wirtschaftsinformatik und Data
+				Science an der TU Wien
+			</h2>
+		</div>
+		<!-- <div class="max-w-80 mx-auto">
 			<img
 				src={hero.cover}
 				alt="placeholder"
@@ -42,16 +52,16 @@
 					{/each}
 				</ul>
 			</div>
-		</div>
+		</div> -->
 	</article>
 </section>
 
 <section>
 	<article class="mb-12">
 		<div class="border-b-2 py-3 mt-2">
-			<h2 class="text-xl font-bold">
+			<h2 class="text-xl font-semibold">
 				<a
-					href="/{$locale}/{hero.slug}"
+					href="/{$locale}/{posts[0].slug}"
 					class=" flex items-center gap-1"
 				>
 					<span>Posts</span>
@@ -68,13 +78,13 @@
 			{#each posts as post, i}
 				<a
 					href="/{$locale}/{post.slug}"
-					class="flex flex-col gap-3 shadow-md"
+					class="flex flex-col gap-3 shadow-md bg-white rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800"
 				>
 					{#if post.cover}
 						<img
 							class="aspect-video object-cover"
-							src={post.cover}
-							alt="coverimg"
+							src="/{post.cover}"
+							alt="alt:{post.cover}"
 						/>
 					{:else}
 						<img
@@ -84,17 +94,19 @@
 						/>
 					{/if}
 
-					<div class="flex flex-col gap-2 p-2">
-						<h2 class="font-bold text-xl text-black">
+					<div class="flex flex-col p-3">
+						<span class="text-xs text-green-500">{post.date}</span>
+						<h2 class="font-bold text-xl">
 							{post.title}
 						</h2>
-						<p class="font-light text-sm text-gray-400 line-clamp-2">
+						<p
+							class="font-light text-sm text-gray-400 line-clamp-3 mt-3"
+						>
 							{post.description}
 						</p>
-						<div class="mt-auto flex gap-2 text-xs text-green-600">
-							<span>{post.date}</span>
-							<span>•</span>
-							<span>{i} minute read</span>
+						<div class="mt-auto flex gap-2 text-xs text-green-400">
+							<!-- <span>•</span>
+							<span>{i} minute read</span> -->
 						</div>
 					</div>
 				</a>
@@ -102,10 +114,10 @@
 		</div>
 		<div class="flex justify-center items-center mt-6">
 			<a
-				href="/{$locale}/{hero.slug}"
-				class="border-2 rounded-full py-2 px-4 shadow-sm flex items-center gap-1"
+				href="/{$locale}/{posts[0].slug}"
+				class="border-2 rounded-full py-2 px-4 shadow-sm flex items-center gap-1 hover:opacity-75"
 			>
-				<span class="font-bold">All posts</span>
+				<button class="font-bold">All posts</button>
 				<Icon
 					icon="mdi-chevron-right"
 					class="text-xl"

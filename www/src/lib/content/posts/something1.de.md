@@ -2,7 +2,7 @@
 title: Just a post 1
 description: valvlasfjsdjvlavjlkvjlaksjvldsajlvajsl
 date: 2023-4-14
-cover: /favicon.png
+cover: lake.png
 ---
 
 ## Markdown GERMAN GERMAN
