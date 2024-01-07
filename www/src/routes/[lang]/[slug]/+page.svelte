@@ -9,11 +9,6 @@
 	export let data;
 	$: pages = queryContent(data.content, data.category, "*", $locale);
 
-	// $:
-	// $: currIndex = pages.findIndex(
-	// 	(obj) => obj.slug === currentPage.slug,
-	// );
-
 	let menuOpen = false;
 	let menuContainer;
 

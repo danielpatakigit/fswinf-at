@@ -1,6 +1,6 @@
 const sorting = {
-	dev: ["todo", "ideas"],
 	studies: ["example", "hello", "introduction"],
+	dev: ["todo", "ideas"],
 	posts: [
 		"welcome",
 		"something1",
