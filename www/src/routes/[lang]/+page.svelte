@@ -1,15 +1,17 @@
 <script>
+	import { fly } from "svelte/transition";
 	import { queryContent } from "$lib/index.js";
 	import { t, locales, locale } from "$lib/translations";
 
 	import Icon from "@iconify/svelte";
+	import { quintOut } from "svelte/easing";
 	export let data;
 
 	$: allPosts = queryContent(data.content, "posts", "*", $locale);
 	$: posts = allPosts.slice(0, 6);
 </script>
 
-<section class="bg-gray-100 dark:bg-gray-950">
+<section class="bg-slate-100 dark:bg-slate-950">
 	<article class="py-24 grid grid-cols-1 gap-12">
 		<div>
 			<h1
@@ -21,6 +23,15 @@
 				und Studienvertretung für Wirtschaftsinformatik und Data
 				Science an der TU Wien
 			</h2>
+			<iframe
+				title="calendar"
+				style="border-width: 0;"
+				src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23ffffff&amp;src=odettgo4tj2tm4ioih85tfr8ag%40group.calendar.google.com&amp;src=fachschaft%40winf.at&amp;color=%23853104&amp;ctz=Europe%2FVienna"
+				width="800"
+				height="800"
+				frameborder="0"
+				scrolling="no"
+			></iframe>
 		</div>
 		<!-- <div class="max-w-80 mx-auto">
 			<img
@@ -78,7 +89,7 @@
 			{#each posts as post, i}
 				<a
 					href="/{$locale}/{post.slug}"
-					class="flex flex-col gap-3 shadow-md bg-white rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800"
+					class="flex flex-col gap-3 shadow-md bg-white rounded-lg hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700"
 				>
 					{#if post.cover}
 						<img
@@ -89,18 +100,20 @@
 					{:else}
 						<img
 							class="aspect-video object-cover"
-							src="/logo.png"
+							src="/winf.svg"
 							alt="coverimg"
 						/>
 					{/if}
 
 					<div class="flex flex-col p-3">
-						<span class="text-xs text-green-500">{post.date}</span>
-						<h2 class="font-bold text-xl">
+						<h2 class="font-light text-xl">
 							{post.title}
 						</h2>
+						<span class="text-xs font-bold text-green-500">
+							{post.date}
+						</span>
 						<p
-							class="font-light text-sm text-gray-400 line-clamp-3 mt-3"
+							class="font-base text-sm text-slate-400 line-clamp-3 mt-3"
 						>
 							{post.description}
 						</p>

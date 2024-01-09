@@ -22,7 +22,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	@apply rounded-full bg-gray-300;
+	@apply rounded-full bg-slate-300;
 }
 
 html {
@@ -34,7 +34,10 @@ body {
 	overflow-y: auto;
 	scrollbar-gutter: none;
 	font-family: "Inter", sans-serif;
-	@apply dark:bg-gradient-to-r dark:from-gray-950 dark:to-gray-900;
+	@apply dark:bg-slate-900;
+	/* @apply dark:bg-slate-900; */
+	/*
+	@apply dark:to-slate-900;  dark:bg-gradient-to-r dark:from-slate-950;*/
 }
 
 section {
@@ -61,27 +64,27 @@ button {
 /* h1 is already styled on the page */
 
 #pc h2 {
-	@apply relative my-3 text-xl font-bold;
+	@apply relative my-3 text-xl font-medium;
 }
 
 #pc h3 {
-	@apply relative my-2 text-lg font-bold;
+	@apply relative my-2 text-lg font-medium;
 }
 
 #pc h4 {
-	@apply relative my-2 text-base font-bold;
+	@apply relative my-2 text-base font-medium;
 }
 
 #pc h5 {
-	@apply relative my-2 text-sm font-bold;
+	@apply relative my-2 text-sm font-medium;
 }
 
 #pc h6 {
-	@apply relative my-2 text-sm font-bold;
+	@apply relative my-2 text-sm font-medium;
 }
 
 #pc p {
-	@apply text-base font-light leading-relaxed;
+	@apply text-base font-light leading-loose;
 }
 
 #pc p:not(:last-child) {
@@ -110,11 +113,11 @@ button {
 }
 
 #pc blockquote {
-	@apply my-4 border-l-4 border-gray-300 p-4 italic;
+	@apply my-4 border-l-4 border-slate-300 p-4 italic;
 }
 
 #pc table {
-	@apply w-full table-auto border border-gray-300 bg-white dark:bg-gray-700;
+	@apply w-full table-auto border border-slate-300 bg-white dark:bg-slate-700;
 }
 #pc th,
 #pc td {
@@ -123,12 +126,12 @@ button {
 
 /* Inline Code */
 #pc :not(pre) code {
-	@apply rounded bg-gray-200 px-2 py-1 dark:bg-slate-600;
+	@apply rounded bg-slate-200 px-2 py-1 dark:bg-slate-600;
 }
 
 /* Separators */
 #pc hr {
-	@apply my-4 border-t border-gray-300;
+	@apply my-4 border-t border-slate-300;
 }
 
 /* Links */
@@ -137,7 +140,7 @@ button {
 }
 
 #pc :not(h1) .icon.icon-link::before {
-	@apply absolute -left-4 text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100;
+	@apply absolute -left-4 hidden text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100 lg:block;
 }
 
 #pc :is(h2, h3, h4, h5, h6):hover .icon.icon-link::before {
@@ -148,7 +151,7 @@ button {
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #393a34;
-	@apply dark:text-gray-200;
+	@apply dark:text-slate-200;
 
 	font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New",
 		Courier, monospace;
@@ -195,7 +198,7 @@ pre[class*="language-"] {
 	overflow: auto;
 	border: 1px solid #dddddd;
 	background-color: white;
-	@apply dark:bg-gray-800;
+	@apply dark:bg-slate-800;
 }
 
 /* Inline code */
@@ -212,7 +215,7 @@ pre[class*="language-"] {
 .token.doctype,
 .token.cdata {
 	color: #999988;
-	@apply dark:text-gray-100;
+	@apply dark:text-slate-100;
 
 	font-style: italic;
 }
@@ -230,7 +233,7 @@ pre[class*="language-"] {
 .token.punctuation,
 .token.operator {
 	color: #393a34; /* no highlight */
-	@apply dark:text-gray-400;
+	@apply dark:text-slate-400;
 }
 
 .token.entity,

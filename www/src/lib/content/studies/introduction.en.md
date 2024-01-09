@@ -10,4 +10,4 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 #Hey friends! 👋
 
-![faviconImage](/logo.png)
+![faviconImage](/winf.svg)

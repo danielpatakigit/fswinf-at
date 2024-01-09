@@ -48,14 +48,14 @@
 	<article class="flex gap-4 flex-col mt-12 mb-24">
 		<h1 class="text-xl font-bold text-center">Search for anything</h1>
 		<div
-			class="flex flex-row border-2 p-2 border-gray-700 rounded-md gap-4 items-center"
+			class="flex flex-row border-2 p-2 border-slate-700 rounded-md gap-4 items-center"
 		>
 			<Icon
 				icon="mdi:search"
 				class="text-2xl"
 			></Icon>
 			<input
-				class=" focus-visible:outline-none w-full h-full text-lg text-gray-800 dark:text-white"
+				class=" focus-visible:outline-none w-full h-full text-lg text-slate-800 dark:text-white"
 				type="text"
 				placeholder="Search..."
 				bind:value={term}
@@ -77,7 +77,7 @@
 			{#each results as result, i}
 				<a
 					href="/{$locale}/{result.slug}"
-					class=" shadow-md border border-gray-200 dark:border-gray-600 dark:bg-gray-800 p-2 min-h-24 flex flex-col hover:bg-gray-100 dark:hover:bg-gray-700 gap-4"
+					class=" shadow-md border border-slate-200 dark:border-slate-600 dark:bg-slate-800 p-2 min-h-24 flex flex-col hover:bg-slate-100 dark:hover:bg-slate-700 gap-4"
 				>
 					<h2 class=" text-xl">
 						<div
@@ -90,7 +90,7 @@
 						<span class="font-bold">{result.title}</span>
 					</h2>
 					<p
-						class="font-light text-sm text-gray-500 dark:text-gray-200 line-clamp-3"
+						class="font-light text-sm text-slate-500 dark:text-slate-200 line-clamp-3"
 					>
 						{result.description}
 					</p>

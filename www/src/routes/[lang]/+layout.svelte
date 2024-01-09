@@ -38,38 +38,11 @@
 			icon: "mdi:linkedin",
 		},
 	];
-	let scrollPercentage = 0;
-	let scrollY;
-	let innerHeight;
 
 	let settingsContainer;
 	let settingsOpen = false;
 
 	$: ({ route } = $page.data);
-
-	onMount(() => {
-		window.addEventListener("scroll", () => {
-			calculateScrollPercentage();
-		});
-		console.log($page);
-	});
-
-	function calculateScrollPercentage() {
-		const temp = (
-			scrollY.toFixed(0) /
-			(document.body.scrollHeight - innerHeight)
-		).toFixed(2);
-
-		scrollPercentage = temp > 1 ? 1 : temp;
-
-		// if percentage is smaller than 10 or bigger than 90 snap to either 0 or 100 to avoid lag from the scroll function
-		scrollPercentage =
-			scrollPercentage * 100 < 8
-				? 0
-				: scrollPercentage * 100 > 90
-					? 100
-					: scrollPercentage * 100;
-	}
 
 	function onWindowClick(e) {
 		if (!settingsContainer.contains(e.target)) settingsOpen = false;
@@ -81,13 +54,9 @@
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
-<svelte:window
-	bind:scrollY
-	bind:innerHeight
-	on:click={onWindowClick}
-/>
+<svelte:window on:click={onWindowClick} />
 
-<header class="w-full relative dark:bg-gray-950">
+<header class="w-full relative dark:bg-slate-950">
 	<article
 		class="flex justify-between gap-4 px-2 pt-1 pb-1 shadow-sm"
 	>
@@ -98,38 +67,39 @@
 		>
 			<img
 				class="h-10 m-auto"
-				src="/logo.png"
+				src="/winf.svg"
 				alt="winf-logo"
 			/>
 		</a>
 		<nav
-			class="absolute bg-white dark:bg-gray-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
+			class="absolute bg-white dark:bg-slate-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
 		>
 			{#each getCategoriesAndPages(data.content) as [category, pages]}
 				{@const current =
 					$page.route.id === "/[lang]/[slug]" &&
 					pages.includes($page.params.slug)}
-				<a
-					href="/{$locale}/{pages[0] ? pages[0] : ''}"
-					class="{current
-						? 'bg-gray-100 dark:bg-gray-800'
-						: ''} {pages[0]
-						? 'hover:bg-gray-100 dark:hover:bg-gray-800'
-						: 'line-through'} capitalize px-2
-					sm:px-4 py-2 font-medium rounded-md flex"
-				>
-					{category}
-				</a>
+				{@const display = pages.length > 0}
+				{#if display}
+					<a
+						href="/{$locale}/{pages[0] ? pages[0] : ''}"
+						class="{current
+							? 'bg-slate-100 dark:bg-slate-800'
+							: ''}  capitalize px-2
+				sm:px-4 py-2 font-medium rounded-md flex"
+					>
+						{category}
+					</a>
+				{/if}
 			{/each}
 		</nav>
 		<div
 			bind:this={settingsContainer}
-			class="relative flex flex-row bg-white dark:bg-gray-900 ml-auto gap-2"
+			class="relative flex flex-row bg-white dark:bg-slate-900 ml-auto gap-2"
 		>
 			<button
 				tabindex="0"
 				on:click={onSettingsClick}
-				class="flex gap-2 border-2 dark:border-gray-600 px-2 sm:px-4 py-2 font-semibold rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+				class="flex gap-2 border-2 dark:border-slate-600 px-2 sm:px-4 py-2 font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
 			>
 				<span class="hidden sm:block">Settings</span>
 				<Icon
@@ -140,7 +110,7 @@
 			<div
 				class="{settingsOpen
 					? 'visible'
-					: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border dark:border-gray-600 bg-white dark:bg-gray-900 *:flex *:items-center *:gap-2 *:w-full *:h-10 hover:*:bg-gray-200 dark:hover:*:bg-gray-800 *:rounded-md *:p-2"
+					: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border dark:border-slate-600 bg-white dark:bg-slate-900 *:flex *:items-center *:gap-2 *:w-full *:h-10 hover:*:bg-slate-200 dark:hover:*:bg-slate-800 *:rounded-md *:p-2"
 			>
 				<button
 					on:click={toggleMode}
@@ -163,7 +133,7 @@
 					<span>Search</span>
 				</a>
 				<select
-					class="dark:bg-gray-900"
+					class="dark:bg-slate-900"
 					on:change={({ target }) => {
 						goto(target.value);
 					}}
@@ -193,22 +163,22 @@
 		</div>
 	</article>
 </header>
-<div
+<!-- <div
 	class=" {scrollY > 80
 		? 'h-[3px]'
-		: 'h-[0px] md:h-[1px]'} bg-gray-200 sticky top-0 z-20 transition-all"
+		: 'h-[0px] md:h-[1px]'} bg-slate-200 sticky top-0 z-20 transition-all"
 >
 	<div
 		class="h-full bg-green-400 transition-all"
 		style="width: {scrollPercentage}%;"
 	></div>
-</div>
+</div> -->
 
 <main class="pt-12 md:pt-0">
 	<slot />
 </main>
 
-<section class="bg-gray-300 dark:bg-gray-950">
+<section class="bg-blue-400 text-white dark:bg-slate-950">
 	<article>
 		<footer class="flex flex-col mt-4 py-4 gap-2">
 			<div
@@ -217,18 +187,19 @@
 				{#each getCategoriesAndPages(data.content) as [category, pages]}
 					<a
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
-						class="capitalize hover:bg-gray-200 dark:hover:bg-gray-900 py-2 px-2 rounded-md"
+						class="capitalize hover:bg-slate-200 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
 					>
 						{category}
 					</a>
 				{/each}
 			</div>
 			<div
-				class="flex flex-row justify-between border-y border-gray-300 my-2 py-2"
+				class="flex flex-row justify-between border-y border-slate-300 my-2 py-2"
 			>
 				<div class="max-w-[10rem] flex justify-center items-center">
 					<img
-						src="/logo.png"
+						src="/winf.svg"
+						class="h-10"
 						alt="logo"
 					/>
 				</div>
