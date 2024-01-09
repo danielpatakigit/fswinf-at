@@ -25,6 +25,11 @@
 	@apply rounded-full bg-gray-300;
 }
 
+html {
+	scroll-behavior: smooth;
+	scroll-padding: 200px;
+}
+
 body {
 	overflow-y: auto;
 	scrollbar-gutter: none;
@@ -132,7 +137,7 @@ button {
 }
 
 #pc :not(h1) .icon.icon-link::before {
-	@apply absolute -left-5 text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100;
+	@apply absolute -left-4 text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100;
 }
 
 #pc :is(h2, h3, h4, h5, h6):hover .icon.icon-link::before {

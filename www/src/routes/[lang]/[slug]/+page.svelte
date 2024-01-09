@@ -1,13 +1,19 @@
 <script>
 	import { page } from "$app/stores";
-	import { queryContent } from "$lib/index.js";
+	import { queryContent, getCategoriesAndPages } from "$lib/index.js";
 	import { t, locales, locale } from "$lib/translations";
 	import { afterUpdate, onMount, tick } from "svelte";
-	import j from "jquery";
 	import Icon from "@iconify/svelte";
+	import { afterNavigate } from "$app/navigation";
+	import { fade } from "svelte/transition";
 
 	export let data;
-	$: pages = queryContent(data.content, data.category, "*", $locale);
+	$: pages = queryContent(
+		data.content,
+		data.categories.current,
+		"*",
+		$locale,
+	);
 
 	let menuOpen = false;
 	let menuContainer;
@@ -20,26 +26,63 @@
 		menuOpen = !menuOpen;
 	}
 
+	function onWindowScroll() {
+		let lastTrueIndex = -1;
+
+		anchorLinks.forEach((link, i) => {
+			if (link.item.getBoundingClientRect().top < 210) {
+				lastTrueIndex = i;
+			}
+		});
+
+		anchorLinks.forEach((link, i) => {
+			link.current = i === lastTrueIndex;
+		});
+		const temp = [...anchorLinks];
+		anchorLinks = [...temp];
+	}
 	let anchorLinks = [];
 	let pageTriplet = {};
-
-	onMount(() => {});
-
-	afterUpdate(() => {
+	afterNavigate(() => {
 		anchorLinks = updatePageContentsList();
 		pageTriplet = updateNeighboringPages();
 	});
 
+	// $: nextPage = { name: data.categories.next };
+
+	let nextCategory = { name: "", href: "" };
+	let previousCategory = { name: "", href: "" };
+	let currentCategory = "";
+	$: if (data.content) {
+		const next = data.categories.next;
+		const previous = data.categories.previous;
+		const current = data.categories.current;
+		// const all = data.categories.all;
+		const content = data.content;
+		const nextPages = getCategoriesAndPages(content, next);
+		const previousPages = getCategoriesAndPages(content, previous);
+
+		previousCategory = { name: previous, href: previousPages[0] };
+		currentCategory = current;
+		nextCategory = { name: next, href: nextPages[0] };
+	}
+
+	onMount(() => {
+		console.log(data.content);
+	});
+
+	afterUpdate(() => {});
+
 	function updateNeighboringPages() {
 		const array = queryContent(
 			data.content,
-			data.category,
+			data.categories.current,
 			"*",
 			$locale,
 		);
 		const currentPage = queryContent(
 			data.content,
-			data.category,
+			data.categories.current,
 			$page.params.slug,
 			$locale,
 		)[0];
@@ -59,12 +102,14 @@
 	}
 
 	function updatePageContentsList() {
-		const headers = j("h2, h3, h4, h5, h6");
+		const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
 		const newArray = [];
-		headers.each(function (i, item) {
+
+		headers.forEach(function (item) {
 			const href = "#" + item.id;
 			const text = item.innerText;
-			newArray.push({ href, text });
+			const current = false;
+			newArray.push({ href, current, text, item });
 		});
 
 		return newArray;
@@ -84,7 +129,10 @@
 	/>
 </svelte:head>
 
-<svelte:window on:click={onWindowClick} />
+<svelte:window
+	on:click={onWindowClick}
+	on:scroll={onWindowScroll}
+/>
 
 <section>
 	<article
@@ -95,7 +143,7 @@
 			bind:this={menuContainer}
 			class="{menuOpen
 				? ''
-				: 'translate-x-[85%]'} pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex"
+				: 'translate-x-[85%]'} pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex overflow-y-scroll"
 		>
 			<button
 				class="bg-white dark:bg-gray-800 dark:hover:bg-gray-600 dark:border-gray-700 h-24 w-auto max-w-12 ml-auto shadow-md px-2 rounded-l-2xl self-center border flex justify-center items-center lg:hidden"
@@ -113,20 +161,72 @@
 			>
 				<span class="mx-auto lg:hidden text-xl">Navigate</span>
 				<hr class="lg:hidden my-2 mb-4" />
-				<span class="mx-auto lg:m-0 uppercase tracking-widest">
-					{data.category}
-				</span>
+				<div
+					class="flex items-center lg:gap-1 relative *:flex-1 flex-row justify-center"
+				>
+					<a
+						class=" text-green-400 lg:absolute opacity-65 hover:opacity-100 -left-5 hover:text-green-500"
+						href="/{$locale}/{previousCategory.href}"
+						id={previousCategory.name}
+					>
+						<Icon
+							class="text-lg"
+							icon="mdi:chevron-left"
+						></Icon>
+					</a>
+					<span class="capitalize text-center lg:text-left">
+						{currentCategory}
+					</span>
+					<a
+						class="flex text-green-400 opacity-65 hover:opacity-100 items-center lg:ml-8 capitalize ml-auto justify-end"
+						href="/{$locale}/{nextCategory.href}"
+					>
+						<span class="text-xs">
+							{nextCategory.name}
+						</span>
+						<Icon
+							icon="mdi:chevron-right"
+							class="text-lg"
+						></Icon>
+					</a>
+				</div>
 				<div class="flex flex-col pt-2">
 					{#each pages as anchor}
 						<a
 							class="{$page.params.slug === anchor.slug
 								? 'font-medium border-l-2 border-gray-400 dark:border-white '
-								: 'dark:border-gray-500 font-light border-l-2 dark:text-gray-300 text-gray-600'}   pl-3 ml-1 py-3"
+								: 'dark:border-gray-500 font-light border-l-2 dark:text-gray-300 text-gray-600'}   pl-3 ml-0 py-3"
 							href={anchor.slug}
 						>
 							{anchor.title}
 						</a>
 					{/each}
+				</div>
+				<div class="lg:hidden flex-col pt-4 text-center">
+					<span class="capitalize font-bold text-base">
+						On this page
+					</span>
+					<hr class="lg:hidden my-2 mb-4" />
+
+					<div
+						class="flex flex-col mt-2 font-light text-sm bg-white dark:bg-transparent w-full"
+						id="on-this-page"
+					>
+						{#if anchorLinks.length > 0}
+							{#each anchorLinks as anchor, i}
+								<a
+									class="{anchor.current
+										? 'font-bold bg-gray-200 border-green-400 dark:bg-gray-950 dark:border-green-400'
+										: 'font-extralight'}  py-3 pl-2 border-gray-100 dark:border-gray-700 border-l-2"
+									href={anchor.href}
+								>
+									{anchor.text}
+								</a>
+							{/each}
+						{:else}
+							<span class="">No headers to show!</span>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</ul>
@@ -142,7 +242,7 @@
 				<span
 					class="uppercase font-bold tracking-widest text-xs text-gray-600 dark:text-gray-400"
 				>
-					{data.category}
+					{data.categories.current}
 				</span>
 				<h1 class="text-2xl font-bold">{data.meta.title}</h1>
 				<div class="mt-auto pt-2 flex gap-2 text-xs text-green-400">
@@ -180,6 +280,24 @@
 									</span>
 								</div>
 							</a>
+						{:else if i > 0}
+							<a
+								href="/{$locale}/{i == 0 ? '' : nextCategory.href}"
+								class="flex flex-row gap-1 text-white items-center justify-center rounded-lg px-4 py-2 bg-green-500 hover:bg-green-600 dark:text-white dark:bg-green-500 dark:hover:bg-green-600"
+							>
+								<div class="{i == 0 ? '' : 'order-2'} ">
+									<Icon
+										icon="gravity-ui:chevron-right"
+										class="{i == 0 ? 'rotate-180' : ''} text-xl"
+									></Icon>
+								</div>
+								<div class="flex flex-col gap-0">
+									<span class="text-xs">More in:</span>
+									<span class="font-medium capitalize">
+										{i == 0 ? "" : nextCategory.name}
+									</span>
+								</div>
+							</a>
 						{:else}
 							<div></div>
 						{/if}
@@ -192,17 +310,23 @@
 		>
 			<span class="capitalize font-bold">On this page</span>
 			<div
-				class="flex flex-col pl-3 mt-2 ml-1 border-l-2 bg-white dark:bg-transparent w-full font-semibold"
+				class="flex flex-col mt-2 font-light text-xs bg-white dark:bg-transparent w-full"
 				id="on-this-page"
 			>
-				{#each anchorLinks as anchor, i}
-					<a
-						class="font-light py-3 border-gray-100 dark:border-gray-700"
-						href={anchor.href}
-					>
-						{anchor.text}
-					</a>
-				{/each}
+				{#if anchorLinks.length > 0}
+					{#each anchorLinks as anchor, i}
+						<a
+							class="{anchor.current
+								? 'font-bold bg-gray-200 border-green-400 dark:bg-gray-950 dark:border-green-400'
+								: ''}  py-2 pl-2 border-gray-100 dark:border-gray-700 border-l-2"
+							href={anchor.href}
+						>
+							{anchor.text}
+						</a>
+					{/each}
+				{:else}
+					<span class="">No headers to show!</span>
+				{/if}
 			</div>
 		</ul>
 	</article>

@@ -12,7 +12,6 @@
 	} from "mode-watcher";
 	import Icon from "@iconify/svelte";
 	import "../../app.pcss";
-	import j from "jquery";
 	import { afterUpdate, onMount } from "svelte";
 
 	export let data;
@@ -49,19 +48,21 @@
 	$: ({ route } = $page.data);
 
 	onMount(() => {
-		j(window).scroll(() => {
+		window.addEventListener("scroll", () => {
 			calculateScrollPercentage();
 		});
+		console.log($page);
 	});
 
 	function calculateScrollPercentage() {
 		const temp = (
 			scrollY.toFixed(0) /
-			(j(document).height() - innerHeight)
+			(document.body.scrollHeight - innerHeight)
 		).toFixed(2);
 
 		scrollPercentage = temp > 1 ? 1 : temp;
-		// if percentage is smaller then 10 or bigger than 90 snap to either 0 or 100 to avoid lagg from the scroll function
+
+		// if percentage is smaller than 10 or bigger than 90 snap to either 0 or 100 to avoid lag from the scroll function
 		scrollPercentage =
 			scrollPercentage * 100 < 8
 				? 0
@@ -105,12 +106,17 @@
 			class="absolute bg-white dark:bg-gray-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
 		>
 			{#each getCategoriesAndPages(data.content) as [category, pages]}
+				{@const current =
+					$page.route.id === "/[lang]/[slug]" &&
+					pages.includes($page.params.slug)}
 				<a
 					href="/{$locale}/{pages[0] ? pages[0] : ''}"
-					class="{pages[0]
+					class="{current
+						? 'bg-gray-100 dark:bg-gray-800'
+						: ''} {pages[0]
 						? 'hover:bg-gray-100 dark:hover:bg-gray-800'
 						: 'line-through'} capitalize px-2
-					sm:px-4 py-2 font-medium rounded-md"
+					sm:px-4 py-2 font-medium rounded-md flex"
 				>
 					{category}
 				</a>
@@ -189,7 +195,7 @@
 </header>
 <div
 	class=" {scrollY > 80
-		? 'h-[4px]'
+		? 'h-[3px]'
 		: 'h-[0px] md:h-[1px]'} bg-gray-200 sticky top-0 z-20 transition-all"
 >
 	<div

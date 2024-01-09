@@ -21,12 +21,17 @@ export function queryContent(combinedContent, category, page, lang) {
 	return result.length > 0 ? result : [];
 }
 
-export function getCategoriesAndPages(content) {
+export function getCategoriesAndPages(content, pageKey = null) {
 	const result = {};
 
 	for (const [category, pages] of Object.entries(content)) {
 		result[category] = Object.keys(pages);
 	}
 
-	return Object.entries(result);
+	const arr = Object.entries(result);
+	if (!pageKey) return arr;
+	else {
+		const pages = arr.find((entry) => entry[0] === pageKey);
+		return pages[1];
+	}
 }
