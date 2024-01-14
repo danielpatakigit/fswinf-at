@@ -185,7 +185,7 @@
 			<div
 				class="border-l-2 lg:border-0 border-slate-100 dark:border-slate-700 shadow-xl lg:shadow-none bg-white dark:lg:bg-transparent dark:bg-slate-950 px-4 pt-4 w-full font-semibold flex flex-col"
 			>
-				<span class="mx-auto lg:hidden text-xl">Navigate</span>
+				<span class="mx-auto lg:hidden text-xl">Navigation</span>
 				<hr class="lg:hidden my-2 mb-4" />
 				<div
 					class="flex items-center lg:gap-1 relative *:flex-1 flex-row justify-center"
@@ -241,8 +241,8 @@
 						</a>
 					{/each}
 				</div>
-				<div class="lg:hidden flex-col pt-4 text-center">
-					<span class="capitalize font-bold text-base">
+				<div class="lg:hidden flex-col mt-16 text-center">
+					<span class="capitalize font-medium text-sm">
 						On this page
 					</span>
 					<hr class="lg:hidden my-2 mb-4" />

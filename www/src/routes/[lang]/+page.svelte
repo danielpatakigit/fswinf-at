@@ -23,7 +23,10 @@
 				und Studienvertretung für Wirtschaftsinformatik und Data
 				Science an der TU Wien
 			</h2>
-			<iframe
+			<p class="underline mt-8 font-semibold text-xl">
+				Still in development! Only for demonstration purposes!
+			</p>
+			<!-- <iframe
 				title="calendar"
 				style="border-width: 0;"
 				src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23ffffff&amp;src=odettgo4tj2tm4ioih85tfr8ag%40group.calendar.google.com&amp;src=fachschaft%40winf.at&amp;color=%23853104&amp;ctz=Europe%2FVienna"
@@ -31,7 +34,7 @@
 				height="800"
 				frameborder="0"
 				scrolling="no"
-			></iframe>
+			></iframe> -->
 		</div>
 		<!-- <div class="max-w-80 mx-auto">
 			<img
@@ -100,7 +103,7 @@
 					{:else}
 						<img
 							class="aspect-video object-cover"
-							src="/winf.svg"
+							src="/logo_black.svg"
 							alt="coverimg"
 						/>
 					{/if}

@@ -65,11 +65,24 @@
 			class="flex items-center min-w-fit justify-center absolute md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none md:inset-auto
 			"
 		>
-			<img
-				class="h-10 m-auto"
-				src="/winf.svg"
-				alt="winf-logo"
-			/>
+			{#if $mode === "dark"}
+				<img
+					class="h-10 m-auto"
+					src="/logo_white.svg"
+					alt="winf-logo"
+				/>
+			{:else}
+				<img
+					class="h-10 m-auto"
+					src="/logo_black.svg"
+					alt="winf-logo"
+				/>
+			{/if}
+			<span
+				class="absolute top-9 left-5 italic text-[10px] font-light"
+			>
+				Demo website
+			</span>
 		</a>
 		<nav
 			class="absolute bg-white dark:bg-slate-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
@@ -178,7 +191,9 @@
 	<slot />
 </main>
 
-<section class="bg-blue-400 text-white dark:bg-slate-950">
+<section
+	class="bg-green-600 text-white dark:text-white dark:bg-slate-950"
+>
 	<article>
 		<footer class="flex flex-col mt-4 py-4 gap-2">
 			<div
@@ -187,7 +202,7 @@
 				{#each getCategoriesAndPages(data.content) as [category, pages]}
 					<a
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
-						class="capitalize hover:bg-slate-200 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
+						class="capitalize hover:bg-green-700 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
 					>
 						{category}
 					</a>
@@ -197,11 +212,21 @@
 				class="flex flex-row justify-between border-y border-slate-300 my-2 py-2"
 			>
 				<div class="max-w-[10rem] flex justify-center items-center">
-					<img
-						src="/winf.svg"
-						class="h-10"
-						alt="logo"
-					/>
+					<a href="/{$locale}">
+						{#if $mode === "dark"}
+							<img
+								class="h-10 m-auto"
+								src="/logo_white.svg"
+								alt="winf-logo"
+							/>
+						{:else}
+							<img
+								class="h-10 m-auto"
+								src="/logo_white.svg"
+								alt="winf-logo"
+							/>
+						{/if}
+					</a>
 				</div>
 				<div
 					class="flex gap-4 flex-row items-center justify-center w-52 text-3xl"
