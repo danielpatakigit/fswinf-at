@@ -56,10 +56,8 @@
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
 <svelte:window on:click={onWindowClick} />
 
-<header class="w-full relative dark:bg-slate-950">
-	<article
-		class="flex justify-between gap-4 px-2 pt-1 pb-1 shadow-sm"
-	>
+<header class="w-full relative dark:bg-slate-950 shadow-sm">
+	<article class="flex justify-between gap-4 px-2 pt-1 pb-1">
 		<a
 			href="/{$locale}"
 			class="flex items-center min-w-fit justify-center absolute md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none md:inset-auto
@@ -91,14 +89,14 @@
 				{@const current =
 					$page.route.id === "/[lang]/[slug]" &&
 					pages.includes($page.params.slug)}
-				{@const display = pages.length > 0}
-				{#if display}
+				{@const isToDisplay = pages.length > 0}
+				{#if isToDisplay}
 					<a
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
 						class="{current
-							? 'bg-slate-100 dark:bg-slate-800'
+							? 'bg-slate-200 dark:bg-slate-700'
 							: ''}  capitalize px-2
-				sm:px-4 py-2 font-medium rounded-md flex"
+				sm:px-4 py-2 font-medium rounded-md flex hover:bg-slate-100 dark:hover:bg-slate-800"
 					>
 						{category}
 					</a>
@@ -160,49 +158,27 @@
 						</option>
 					{/each}
 				</select>
-				<!-- <div
-					class="flex gap-2 flex-row items-center justify-center text-xl"
-				>
-					{#each socials as social, i}
-						<a
-							target="_blank"
-							href={social.url}
-						>
-							<Icon icon={social.icon}></Icon>
-						</a>
-					{/each}
-				</div> -->
 			</div>
 		</div>
 	</article>
 </header>
-<!-- <div
-	class=" {scrollY > 80
-		? 'h-[3px]'
-		: 'h-[0px] md:h-[1px]'} bg-slate-200 sticky top-0 z-20 transition-all"
->
-	<div
-		class="h-full bg-green-400 transition-all"
-		style="width: {scrollPercentage}%;"
-	></div>
-</div> -->
 
 <main class="pt-12 md:pt-0">
 	<slot />
 </main>
 
 <section
-	class="bg-green-600 text-white dark:text-white dark:bg-slate-950"
+	class="bg-winfgreen-500 text-white dark:text-white dark:bg-slate-950"
 >
 	<article>
-		<footer class="flex flex-col mt-4 py-4 gap-2">
+		<footer class="flex flex-col mt-4 py-4 gap-2 font-header">
 			<div
 				class="grid grid-cols-[repeat(auto-fill,_minmax(120px,_1fr))] gap-2 font-medium text-center"
 			>
 				{#each getCategoriesAndPages(data.content) as [category, pages]}
 					<a
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
-						class="capitalize hover:bg-green-700 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
+						class="capitalize hover:bg-winfgreen-600 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
 					>
 						{category}
 					</a>

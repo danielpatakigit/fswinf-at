@@ -6,7 +6,9 @@ date: 2023-4-14
 
 ## Random to dos
 
-- **find solution to the cover img problem**
+GERMAN GERMAN
+**find solution to the cover img problem**
+
 - implement next page, previous page buttons
 - if you're on the last page of a category offer other categories
 - start implementing responsive feautres like: shelf for the category navigation, little dropdown for the main navigation and other features

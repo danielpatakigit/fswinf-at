@@ -81,7 +81,7 @@
 				>
 					<h2 class=" text-xl">
 						<div
-							class="mt-auto pt-2 flex gap-2 text-xs text-green-400"
+							class="mt-auto pt-2 flex gap-2 text-xs text-winfgreen-400"
 						>
 							<span>{result.date}</span>
 							<!-- <span>•</span>

@@ -51,8 +51,15 @@
 	afterNavigate(() => {
 		anchorLinks = updatePageContentsList();
 		pageTriplet = updateNeighboringPages();
+		addBlankTargetToLinks();
 	});
 
+	onMount(() => {
+		window.addEventListener("scroll", () => {
+			calculateScrollPercentage();
+		});
+	});
+	afterUpdate(() => {});
 	// $: nextPage = { name: data.categories.next };
 
 	let nextCategory = { name: "", href: "" };
@@ -72,12 +79,6 @@
 		nextCategory = { name: next, href: nextPages[0] };
 	}
 
-	onMount(() => {
-		window.addEventListener("scroll", () => {
-			calculateScrollPercentage();
-		});
-	});
-
 	function calculateScrollPercentage() {
 		const temp = (
 			scrollY.toFixed(0) /
@@ -94,8 +95,6 @@
 					? 100
 					: scrollPercentage * 100;
 	}
-
-	afterUpdate(() => {});
 
 	function updateNeighboringPages() {
 		const array = queryContent(
@@ -138,6 +137,20 @@
 
 		return newArray;
 	}
+
+	function addBlankTargetToLinks() {
+		const container = document.getElementById("pc");
+
+		if (container) {
+			const links = container.getElementsByTagName("a");
+
+			for (let i = 0; i < links.length; i++) {
+				links[i].setAttribute("target", "_blank");
+			}
+		} else {
+			console.error(`Element with ID '${elementId}' not found.`);
+		}
+	}
 </script>
 
 <!-- SEO -->
@@ -169,7 +182,7 @@
 			bind:this={menuContainer}
 			class="{menuOpen
 				? ''
-				: 'translate-x-[85%]'} pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex overflow-y-scroll"
+				: 'translate-x-[85%]'} font-header pointer-events-none *:pointer-events-auto lg:translate-x-0 fixed right-0 top-0 lg:w-auto h-screen z-50 lg:sticky lg:h-min grid lg:z-0 grid-cols-[15%_,85%] text-sm transition-all min-w-72 lg:min-w-0 lg:flex overflow-y-scroll"
 		>
 			<button
 				class="bg-white dark:bg-slate-800 dark:hover:bg-slate-600 dark:border-slate-700 h-24 w-auto max-w-12 ml-auto shadow-md px-2 rounded-l-2xl self-center border flex justify-center items-center lg:hidden"
@@ -191,7 +204,7 @@
 					class="flex items-center lg:gap-1 relative *:flex-1 flex-row justify-center"
 				>
 					<a
-						class=" text-green-400 lg:absolute opacity-65 hover:opacity-100 -left-5 hover:text-green-500"
+						class=" text-winfgreen-400 lg:absolute opacity-65 hover:opacity-100 -left-5 hover:text-winfgreen-500"
 						href="/{$locale}/{previousCategory.href}"
 						id={previousCategory.name}
 					>
@@ -204,7 +217,7 @@
 						{currentCategory}
 					</span>
 					<a
-						class="flex text-green-400 opacity-65 hover:opacity-100 items-center lg:ml-8 capitalize ml-auto justify-end"
+						class="flex text-winfgreen-400 opacity-65 hover:opacity-100 items-center lg:ml-8 capitalize ml-auto justify-end"
 						href="/{$locale}/{nextCategory.href}"
 					>
 						<span class="text-xs">
@@ -227,10 +240,10 @@
 						>
 							{#if current}
 								<div
-									class="w-[2px] h-full bg-green-200 dark:bg-green-300 absolute left-0 top-0"
+									class="w-[2px] h-full bg-slate-300 dark:bg-white absolute left-0 top-0"
 								>
 									<div
-										class="w-full bg-green-400 dark:bg-green-500"
+										class="w-full bg-winfgreen-400 dark:bg-winfgreen-400"
 										style="height: {scrollPercentage}%;"
 									></div>
 								</div>
@@ -255,7 +268,7 @@
 							{#each anchorLinks as anchor, i}
 								<a
 									class="{anchor.current
-										? 'font-bold bg-slate-200 border-green-400 dark:bg-slate-950 dark:border-green-400'
+										? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-950 dark:border-winfgreen-400'
 										: 'font-extralight'}  py-3 pl-2 border-slate-100 border-l-2"
 									href={anchor.href}
 								>
@@ -281,15 +294,15 @@
 				<span
 					class="uppercase font-bold tracking-widest text-xs text-slate-600 dark:text-slate-400"
 				></span>
-				<h1 class="text-5xl font-light leading-snug">
+				<h1 class="text-4xl font-bold leading-[1.2] font-header">
 					{data.meta.title}
 				</h1>
 				<div
-					class="mt-auto pt-2 flex gap-2 text-xs font-bold text-green-400"
+					class="mt-auto pt-2 flex gap-2 text-xs font-bold text-winfgreen-400 font-header"
 				>
 					<span>{data.meta.date}</span>
-					<span>•</span>
-					<span class="uppercase tracking-widest">
+					<span class="text-slate-800">•</span>
+					<span class="uppercase tracking-wide text-winfblue-400">
 						{data.categories.current}
 					</span>
 				</div>
@@ -326,7 +339,7 @@
 						{:else if i > 0}
 							<a
 								href="/{$locale}/{i == 0 ? '' : nextCategory.href}"
-								class="flex flex-row gap-1 text-white items-center justify-center rounded-lg px-4 py-2 bg-green-500 hover:bg-green-600 dark:text-white dark:bg-green-500 dark:hover:bg-green-600"
+								class="flex flex-row gap-1 text-white items-center justify-center rounded-lg px-4 py-2 bg-winfgreen-400 hover:bg-winfgreen-600 dark:text-white dark:bg-winfgreen-500 dark:hover:bg-winfgreen-600"
 							>
 								<div class="{i == 0 ? '' : 'order-2'} ">
 									<Icon
@@ -349,7 +362,7 @@
 			</div>
 		</div>
 		<ul
-			class="lg:flex flex-col text-sm pt-4 sticky h-min top-0 hidden"
+			class="lg:flex flex-col text-sm pt-4 sticky h-min top-0 hidden font-header"
 		>
 			<span class="capitalize font-bold">On this page</span>
 			<div
@@ -359,12 +372,12 @@
 				{#if anchorLinks.length > 0}
 					{#each anchorLinks as anchor, i}
 						<!-- class="{anchor.current
-						? 'font-bold bg-slate-200 border-green-400 dark:bg-slate-950 dark:border-green-400'
+						? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-950 dark:border-winfgreen-400'
 						: ''}   border-slate-100 dark:border-slate-700 border-l-2" -->
 						<a
 							class="{anchor.current
-								? 'font-bold bg-slate-200 dark:bg-slate-950 border-green-400'
-								: 'border-slate-100 dark:border-slate-700'} py-2 pl-2 border-l-2"
+								? 'font-bold bg-slate-200 dark:bg-slate-950 border-winfblue-400'
+								: 'border-slate-100 dark:border-slate-700 font-light'} py-2 pl-2 border-l-2"
 							href={anchor.href}
 						>
 							{anchor.text}

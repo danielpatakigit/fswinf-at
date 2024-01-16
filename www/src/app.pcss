@@ -1,6 +1,5 @@
 /* Inter Import */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
@@ -33,7 +32,7 @@ html {
 body {
 	overflow-y: auto;
 	scrollbar-gutter: none;
-	font-family: "Inter", sans-serif;
+	/* font-family: "Inter", sans-serif; */
 	@apply dark:bg-slate-900;
 	/* @apply dark:bg-slate-900; */
 	/*
@@ -64,23 +63,23 @@ button {
 /* h1 is already styled on the page */
 
 #pc h2 {
-	@apply relative my-3 text-xl font-medium;
+	@apply relative my-3 font-header text-xl font-semibold;
 }
 
 #pc h3 {
-	@apply relative my-2 text-lg font-medium;
+	@apply relative my-2 font-header text-lg font-semibold;
 }
 
 #pc h4 {
-	@apply relative my-2 text-base font-medium;
+	@apply relative my-2 font-header text-base font-semibold;
 }
 
 #pc h5 {
-	@apply relative my-2 text-sm font-medium;
+	@apply relative my-2 font-header text-sm font-semibold;
 }
 
 #pc h6 {
-	@apply relative my-2 text-sm font-medium;
+	@apply relative my-2 font-header text-sm font-semibold;
 }
 
 #pc p {
@@ -136,11 +135,11 @@ button {
 
 /* Links */
 #pc a {
-	@apply text-blue-500;
+	@apply underline decoration-winfgreen-500 decoration-2 underline-offset-2;
 }
 
 #pc :not(h1) .icon.icon-link::before {
-	@apply absolute -left-4 hidden text-green-400 opacity-0 transition-opacity content-['#'] hover:text-green-500 hover:opacity-100 lg:block;
+	@apply absolute -left-4 hidden text-winfgreen-400 opacity-0 transition-opacity content-['#'] hover:text-winfgreen-500 hover:opacity-100 lg:block;
 }
 
 #pc :is(h2, h3, h4, h5, h6):hover .icon.icon-link::before {

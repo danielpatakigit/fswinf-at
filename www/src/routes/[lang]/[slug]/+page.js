@@ -10,7 +10,6 @@ export async function load({ params, data }) {
 			);
 
 			const currentIndex = possibleCategories.indexOf(category);
-			console.log(currentIndex);
 			let nextCategory = null;
 			let previousCategory = null;
 

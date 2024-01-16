@@ -11,19 +11,34 @@
 	$: posts = allPosts.slice(0, 6);
 </script>
 
-<section class="bg-slate-100 dark:bg-slate-950">
-	<article class="py-24 grid grid-cols-1 gap-12">
-		<div>
+<section class="bg-winfbaige-300 dark:bg-slate-950">
+	<article
+		class="py-24 grid grid-cols-1 md:grid-cols-2 gap-12 z-20 col-start-1 row-start-1"
+	>
+		<div class="flex flex-col gap-3 order-2 md:order-1">
 			<h1
-				class="text-3xl md:text-5xl leading-9 text-balance font-medium"
+				class="text-3xl md:text-4xl leading-9 text-balance font-bold font-header"
 			>
-				Fachschaft Wirtschaftsinformatik und Data Science
+				Hey, we are the FS Winf!
 			</h1>
-			<h2 class="mt-2 text-balance md:text-lg">
-				und Studienvertretung für Wirtschaftsinformatik und Data
-				Science an der TU Wien
+			<h2 class="mt-2 text-balance md:text-lg flex flex-col">
+				<span class="font-bold">
+					Fachschaft Wirtschaftsinformatik und Data Science
+				</span>
+				<span>
+					Studienvertretung für Wirtschaftsinformatik und Data Science
+					an der TU Wien
+				</span>
 			</h2>
-			<p class="underline mt-8 font-semibold text-xl">
+			<div class="flex gap-4">
+				<a
+					class="px-4 py-2 border-winfblue-700 border-2 hover:border-winfblue-100 bg-winfblue-200 hover:bg-winfblue-100 font-semibold rounded-full"
+					href="/{$locale}"
+				>
+					Start Exploring
+				</a>
+			</div>
+			<p class="underline mt-8 font-semibold text-sm">
 				Still in development! Only for demonstration purposes!
 			</p>
 			<!-- <iframe
@@ -35,6 +50,13 @@
 				frameborder="0"
 				scrolling="no"
 			></iframe> -->
+		</div>
+		<div class="order-1">
+			<img
+				class="rounded-2xl"
+				src="/winf_hero.jpg"
+				alt="winf_hero"
+			/>
 		</div>
 		<!-- <div class="max-w-80 mx-auto">
 			<img
@@ -96,31 +118,33 @@
 				>
 					{#if post.cover}
 						<img
-							class="aspect-video object-cover"
+							class="aspect-video object-cover rounded-t-lg"
 							src="/{post.cover}"
 							alt="alt:{post.cover}"
 						/>
 					{:else}
 						<img
-							class="aspect-video object-cover"
+							class="aspect-video object-cover rounded-t-lg"
 							src="/logo_black.svg"
 							alt="coverimg"
 						/>
 					{/if}
 
 					<div class="flex flex-col p-3">
-						<h2 class="font-light text-xl">
+						<h2 class="font-normal text-xl">
 							{post.title}
 						</h2>
-						<span class="text-xs font-bold text-green-500">
+						<span class="text-xs font-bold text-winfgreen-500">
 							{post.date}
 						</span>
 						<p
-							class="font-base text-sm text-slate-400 line-clamp-3 mt-3"
+							class="font-base text-sm text-slate-500 line-clamp-3 mt-3"
 						>
 							{post.description}
 						</p>
-						<div class="mt-auto flex gap-2 text-xs text-green-400">
+						<div
+							class="mt-auto flex gap-2 text-xs text-winfgreen-400"
+						>
 							<!-- <span>•</span>
 							<span>{i} minute read</span> -->
 						</div>
@@ -133,7 +157,7 @@
 				href="/{$locale}/{posts[0].slug}"
 				class="border-2 rounded-full py-2 px-4 shadow-sm flex items-center gap-1 hover:opacity-75"
 			>
-				<button class="font-bold">All posts</button>
+				<button class="font-medium">All posts</button>
 				<Icon
 					icon="mdi-chevron-right"
 					class="text-xl"
