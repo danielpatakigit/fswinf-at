@@ -32,7 +32,8 @@ molestiae nisi voluptas? Quam, perspiciatis delectus amet asperiores esse ex fug
 
 **Paragraph:**
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget justo vel augue commodo ultrices.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget justo vel augue commodo ultrices. **et, consectetur adipiscing elit. Nullam eget justo vel augue commodo ultrices.** et, consectetur adipiscing elit. Nullam eget justo vel augue commodo ultrices.
+lroe
 
 ---
 
@@ -68,6 +69,8 @@ _Italic Text_
 
 ---
 
+> ### Header 3 in blockquote
+>
 > Blockquote: This is a blockquote. It can span multiple lines and is often used for citing text from another source.
 
 ---

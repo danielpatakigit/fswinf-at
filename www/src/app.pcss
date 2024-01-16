@@ -91,7 +91,7 @@ button {
 }
 
 #pc strong {
-	@apply font-bold;
+	@apply font-semibold;
 }
 
 /* Lists */
@@ -108,11 +108,11 @@ button {
 }
 
 #pc li {
-	@apply mb-2;
+	@apply mb-2 font-light;
 }
 
 #pc blockquote {
-	@apply my-4 border-l-4 border-slate-300 p-4 italic;
+	@apply my-4 border-l-8 border-winfgreen-500 bg-winfgreen-100 p-4 dark:border-winfgreen-900 dark:bg-winfgreen-500;
 }
 
 #pc table {
@@ -135,7 +135,7 @@ button {
 
 /* Links */
 #pc a {
-	@apply underline decoration-winfgreen-500 decoration-2 underline-offset-2;
+	@apply underline decoration-winfgreen-500 decoration-2 underline-offset-2 hover:opacity-80;
 }
 
 #pc :not(h1) .icon.icon-link::before {

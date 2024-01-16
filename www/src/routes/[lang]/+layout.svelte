@@ -39,6 +39,18 @@
 		},
 	];
 
+	let scrollingDownwards = false;
+	// let prevScrollPosition;
+	let scrollY;
+	// onMount(() => {
+	// 	prevScrollPosition = window.scrollY;
+
+	// 	window.addEventListener("scroll", updateScrollDirection);
+	// 	return () => {
+	// 		window.removeEventListener("scroll", updateScrollDirection);
+	// 	};
+	// });
+
 	let settingsContainer;
 	let settingsOpen = false;
 
@@ -51,12 +63,23 @@
 	function onSettingsClick() {
 		settingsOpen = !settingsOpen;
 	}
+
+	// function updateScrollDirection() {
+	// 	const currentScrollPosition = window.scrollY;
+	// 	scrollingDownwards = currentScrollPosition > prevScrollPosition;
+	// 	prevScrollPosition = currentScrollPosition;
+	// }
 </script>
 
 <ModeWatcher defaultMode={"dark"}></ModeWatcher>
-<svelte:window on:click={onWindowClick} />
+<svelte:window
+	on:click={onWindowClick}
+	bind:scrollY
+/>
 
-<header class="w-full relative dark:bg-slate-950 shadow-sm">
+<header
+	class="  w-full transition-all duration-700 dark:bg-slate-950 top-0 relative z-40 bg-white"
+>
 	<article class="flex justify-between gap-4 px-2 pt-1 pb-1">
 		<a
 			href="/{$locale}"
