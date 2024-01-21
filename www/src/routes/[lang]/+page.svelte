@@ -1,46 +1,166 @@
 <script>
-	import { fly } from "svelte/transition";
+	import { fly, slide } from "svelte/transition";
 	import { queryContent } from "$lib/index.js";
 	import { t, locales, locale } from "$lib/translations";
 
 	import Icon from "@iconify/svelte";
-	import { quintOut } from "svelte/easing";
+	import {
+		backIn,
+		bounceIn,
+		circIn,
+		elasticIn,
+		elasticInOut,
+		quartIn,
+		quintIn,
+		quintOut,
+		sineIn,
+	} from "svelte/easing";
 	export let data;
+	import { socials } from "$lib/content/sorting.js";
+	import { onMount } from "svelte";
 
 	$: allPosts = queryContent(data.content, "posts", "*", $locale);
 	$: posts = allPosts.slice(0, 6);
+
+	let loaded = false;
+	onMount(() => {
+		loaded = true;
+	});
 </script>
 
-<section class="bg-winfbaige-300 dark:bg-slate-950">
-	<article
-		class="py-24 grid grid-cols-1 md:grid-cols-2 gap-12 z-20 col-start-1 row-start-1"
-	>
-		<div class="flex flex-col gap-3 order-2 md:order-1">
-			<h1
-				class="text-3xl md:text-4xl leading-9 text-balance font-bold font-header"
+<section class=" dark:bg-slate-900">
+	<article class="flex flex-col py-12 gap-16">
+		{#if loaded}
+			<div
+				in:fly={{
+					delay: 0,
+					duration: 1200,
+					x: 0,
+					y: -20,
+					opacity: 0,
+					easing: quintIn,
+				}}
+				class="text-center flex flex-col items-center gap-4"
 			>
-				Hey, we are the FS Winf!
-			</h1>
-			<h2 class="mt-2 text-balance md:text-lg flex flex-col">
-				<span class="font-bold">
-					Fachschaft Wirtschaftsinformatik und Data Science
-				</span>
-				<span>
-					Studienvertretung für Wirtschaftsinformatik und Data Science
-					an der TU Wien
-				</span>
-			</h2>
-			<div class="flex gap-4">
-				<a
-					class="px-4 py-2 border-winfblue-700 border-2 hover:border-winfblue-100 bg-winfblue-200 hover:bg-winfblue-100 font-semibold rounded-full"
-					href="/{$locale}"
+				<div
+					class="rounded-full italic font-medium text-white py-2 px-4 font-header bg-winfgreen-400"
 				>
-					Start Exploring
-				</a>
+					Funny text here
+				</div>
+				<h1
+					class="text-balance text-5xl md:text-7xl font-semibold leading-none tracking-tight"
+				>
+					We are <br />
+					the
+					<span class="text-winfgreen-500 font-header">FS Winf!</span>
+				</h1>
+				<h2
+					class="mt-2 text-balance flex flex-col text-slate-700 dark:text-slate-200"
+				>
+					Fachschaft und Studienvertretung für Wirtschaftsinformatik <br
+						class="hidden md:block"
+					/>
+					und Data Science an der TU Wien
+				</h2>
 			</div>
-			<p class="underline mt-8 font-semibold text-sm">
-				Still in development! Only for demonstration purposes!
-			</p>
+			<div
+				in:fly={{
+					delay: 0,
+					duration: 1400,
+					x: 0,
+					y: 50,
+					opacity: 0,
+					easing: quintIn,
+				}}
+				class="grid gird-cols-1 md:grid-cols-2 gap-4"
+			>
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 grid-rows-3 lg:grid-rows-[44%,_28%,_28%,] gap-4"
+				>
+					<div class="md:col-span-2 w-full h-full">
+						<img
+							class="rounded-2xl object-cover object-bottom w-full h-full"
+							src="/winf_hero.jpg"
+							alt="winf_hero"
+						/>
+					</div>
+					<div class="grid grid-cols-2 grid-rows-2 gap-4 md:gap-3">
+						{#each socials as social, i}
+							<a
+								class="flex items-center text-black justify-center md:text-3xl rounded-2xl bg-slate-100 hover:bg-slate-200 group aspect-square md:aspect-auto text-5xl"
+								target="_blank"
+								href={social.url}
+							>
+								<Icon
+									class="group-hover:rotate-12 transition-transform"
+									icon={social.icon}
+								></Icon>
+							</a>
+						{/each}
+					</div>
+					<div
+						class="row-span-2 p-4 bg-winfblue-500 text-white rounded-2xl flex flex-col justify-between"
+					>
+						<div class="text-6xl">50</div>
+						<div class="font-semibold text-md">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Unde sunt error facilis.
+						</div>
+					</div>
+					<div
+						class="p-4 bg-slate-100 text-black rounded-2xl flex flex-col justify-between"
+					>
+						<div class="text-6xl">50</div>
+						<div class="font-base text-md">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Unde sunt error facilis.
+						</div>
+					</div>
+				</div>
+				<div class="grid grid-cols-2 grid-rows-[28%,_28%,_44%] gap-4">
+					<div
+						class="row-span-2 p-4 bg-winfgreen-500 text-white rounded-2xl flex flex-col justify-between"
+					>
+						<div class="text-6xl">50</div>
+						<div class="font-semibold text-md">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Unde sunt error facilis.
+						</div>
+					</div>
+					<div class="grid grid-cols-2 grid-rows-2 gap-4 md:gap-3">
+						{#each socials as social, i}
+							<a
+								class="flex items-center text-black justify-center text-3xl rounded-2xl bg-slate-100 hover:bg-slate-200 group"
+								target="_blank"
+								href={social.url}
+							>
+								<Icon
+									class="group-hover:rotate-12 transition-transform"
+									icon={social.icon}
+								></Icon>
+							</a>
+						{/each}
+					</div>
+
+					<div
+						class="p-4 bg-slate-100 text-black rounded-2xl flex flex-col justify-between"
+					>
+						<div class="text-6xl">50</div>
+						<div class="font-base text-md line-clamp-2">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Unde sunt error facilis.
+						</div>
+					</div>
+					<div class="col-span-2 w-full h-full">
+						<img
+							class="rounded-2xl object-cover object-bottom w-full h-full"
+							src="/winf_hero.jpg"
+							alt="winf_hero"
+						/>
+					</div>
+				</div>
+			</div>
+
 			<!-- <iframe
 				title="calendar"
 				style="border-width: 0;"
@@ -50,63 +170,32 @@
 				frameborder="0"
 				scrolling="no"
 			></iframe> -->
-		</div>
-		<div class="order-1">
-			<img
-				class="rounded-2xl"
-				src="/winf_hero.jpg"
-				alt="winf_hero"
-			/>
-		</div>
-		<!-- <div class="max-w-80 mx-auto">
-			<img
-				src={hero.cover}
-				alt="placeholder"
-			/>
-		</div>
-		<div class="flex gap-4 flex-col text-center">
-			<div class="flex flex-col gap-4 items-center">
-				<h1 class="text-2xl font-bold">
-					{hero.title}
-				</h1>
-				<p>{hero.description}</p>
-				<a
-					href="/{$locale}/{hero.slug}"
-					class="px-4 py-2 w-min bg-black text-white rounded-full font-bold"
-				>
-					About
-				</a>
-			</div>
-			<div class="">
-				<h2 class="font-bold">Statistics</h2>
-				<ul class="">
-					{#each Array(4) as _, i}
-						<li class="flex justify-between">
-							<span>Statistic name {i}</span>
-							<span>1234</span>
-						</li>
-					{/each}
-				</ul>
-			</div>
-		</div> -->
+		{/if}
 	</article>
 </section>
 
 <section>
-	<article class="mb-12">
-		<div class="border-b-2 py-3 mt-2">
-			<h2 class="text-xl font-semibold">
+	<article class="mb-12 mt-24 flex flex-col gap-12">
+		<div class="flex flex-col items-center gap-6 justify-center">
+			<h2 class="text-3xl md:text-5xl font-semibold">
 				<a
 					href="/{$locale}/{posts[0].slug}"
-					class=" flex items-center gap-1"
+					class="flex items-center gap-1 underline decoration-winfgreen-500 underline-offset-4 group"
 				>
-					<span>Posts</span>
+					<span>Neuigkeiten</span>
 					<Icon
-						icon="mdi-chevron-right"
-						class="text-xl"
-					/>
+						class="group-hover:-rotate-45 group-hover:text-winfgreen-500"
+						icon="gg:arrow-right"
+					></Icon>
 				</a>
 			</h2>
+			<span
+				class="text-center text-balance text-slate-700 dark:text-slate-200"
+			>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
+				repellendus incidunt perspiciatis modi saepe minima distinctio
+				quisquam possimus autem quibusdam.
+			</span>
 		</div>
 		<div
 			class="mt-4 grid grid-cols-1 gap-y-12 sm:grid-cols-2 md:grid-cols-3 gap-6"
@@ -114,31 +203,33 @@
 			{#each posts as post, i}
 				<a
 					href="/{$locale}/{post.slug}"
-					class="flex flex-col gap-3 shadow-md bg-white rounded-lg hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700"
+					class="flex flex-col bg-slate-100 rounded-2xl hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 group"
 				>
 					{#if post.cover}
 						<img
-							class="aspect-video object-cover rounded-t-lg"
+							class="aspect-video object-cover rounded-t-2xl"
 							src="/{post.cover}"
 							alt="alt:{post.cover}"
 						/>
 					{:else}
 						<img
-							class="aspect-video object-cover rounded-t-lg"
-							src="/logo_black.svg"
+							class="aspect-video object-contain rounded-t-2xl p-4"
+							src="/fswinf_favicon_dark.png"
 							alt="coverimg"
 						/>
 					{/if}
 
-					<div class="flex flex-col p-3">
-						<h2 class="font-normal text-xl">
+					<div class="flex flex-col px-4 pt-2 pb-5 relative">
+						<h2 class="font-semibold text-2xl text-balance">
 							{post.title}
 						</h2>
-						<span class="text-xs font-bold text-winfgreen-500">
+						<span
+							class="text-xs font-semibold rounded-tr-lg w-fit -top-5 py-1 px-4 bg-slate-100 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 left-0 absolute dark:bg-slate-800"
+						>
 							{post.date}
 						</span>
 						<p
-							class="font-base text-sm text-slate-500 line-clamp-3 mt-3"
+							class="font-base text-sm text-slate-700 dark:text-slate-200 line-clamp-3 mt-2"
 						>
 							{post.description}
 						</p>

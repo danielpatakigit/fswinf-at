@@ -16,28 +16,7 @@
 
 	export let data;
 
-	let socials = [
-		{
-			name: "Instagram",
-			url: "https://www.instagram.com/fswinf/",
-			icon: "ri:instagram-fill",
-		},
-		{
-			name: "Telegram",
-			url: "https://telegram.me/fswinf",
-			icon: "ic:baseline-telegram",
-		},
-		{
-			name: "Facebook",
-			url: "https://www.facebook.com/fswinf",
-			icon: "ic:baseline-facebook",
-		},
-		{
-			name: "LinkedIn",
-			url: "https://www.linkedin.com/company/fswinf/about/",
-			icon: "mdi:linkedin",
-		},
-	];
+	import { socials } from "$lib/content/sorting.js";
 
 	let scrollingDownwards = false;
 	// let prevScrollPosition;
@@ -78,7 +57,7 @@
 />
 
 <header
-	class="  w-full transition-all duration-700 dark:bg-slate-950 top-0 relative z-40 bg-white"
+	class="w-full transition-all duration-700 dark:bg-slate-900 top-0 relative z-40 bg-white"
 >
 	<article class="flex justify-between gap-4 px-2 pt-1 pb-1">
 		<a
@@ -106,7 +85,7 @@
 			</span>
 		</a>
 		<nav
-			class="absolute bg-white dark:bg-slate-950 left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
+			class="absolute left-0 -bottom-12 w-full h-12 md:h-auto overflow-auto items-center flex flex-row gap-3 md:relative md:bottom-0 justify-center shadow-md md:shadow-none"
 		>
 			{#each getCategoriesAndPages(data.content) as [category, pages]}
 				{@const current =
@@ -133,7 +112,7 @@
 			<button
 				tabindex="0"
 				on:click={onSettingsClick}
-				class="flex gap-2 border-2 dark:border-slate-600 px-2 sm:px-4 py-2 font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+				class="flex gap-2 border-2 dark:border-slate-600 px-2 sm:px-4 py-2 font-semibold rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
 			>
 				<span class="hidden sm:block">Settings</span>
 				<Icon

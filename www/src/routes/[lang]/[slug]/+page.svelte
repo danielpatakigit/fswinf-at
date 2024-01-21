@@ -196,7 +196,7 @@
 				></Icon>
 			</button>
 			<div
-				class="border-l-2 lg:border-0 border-slate-100 dark:border-slate-700 shadow-xl lg:shadow-none bg-white dark:lg:bg-transparent dark:bg-slate-950 px-4 pt-4 w-full font-semibold flex flex-col"
+				class="border-l-2 lg:border-0 border-slate-100 dark:border-slate-700 shadow-xl lg:shadow-none bg-white dark:lg:bg-transparent dark:bg-slate-900 px-4 pt-4 w-full font-semibold flex flex-col"
 			>
 				<span class="mx-auto lg:hidden text-xl">Navigation</span>
 				<hr class="lg:hidden my-2 mb-4" />
@@ -240,7 +240,7 @@
 						>
 							{#if current}
 								<div
-									class="w-[2px] h-full bg-slate-300 dark:bg-white absolute left-0 top-0"
+									class="w-[2px] h-full bg-slate-200 dark:bg-white absolute left-0 top-0"
 								>
 									<div
 										class="w-full bg-winfgreen-400 dark:bg-winfgreen-400"
@@ -268,7 +268,7 @@
 							{#each anchorLinks as anchor, i}
 								<a
 									class="{anchor.current
-										? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-950 dark:border-winfgreen-400'
+										? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-900 dark:border-winfgreen-400'
 										: 'font-extralight'}  py-3 pl-2 border-slate-100 border-l-2"
 									href={anchor.href}
 								>
@@ -366,25 +366,25 @@
 		>
 			<span class="capitalize font-bold">On this page</span>
 			<div
-				class="flex flex-col mt-2 font-light text-xs bg-white dark:bg-transparent w-full"
+				class="flex flex-col mt-2 font-normal text-sm bg-white dark:bg-transparent w-full"
 				id="on-this-page"
 			>
 				{#if anchorLinks.length > 0}
 					{#each anchorLinks as anchor, i}
 						<!-- class="{anchor.current
-						? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-950 dark:border-winfgreen-400'
+						? 'font-bold bg-slate-200 border-winfgreen-400 dark:bg-slate-900 dark:border-winfgreen-400'
 						: ''}   border-slate-100 dark:border-slate-700 border-l-2" -->
 						<a
 							class="{anchor.current
-								? 'font-bold bg-slate-200 dark:bg-slate-950 border-winfblue-400'
-								: 'border-slate-100 dark:border-slate-700 font-light'} py-2 pl-2 border-l-2"
+								? 'font-bold bg-slate-200 dark:bg-slate-800 border-winfblue-400'
+								: 'font-base border-slate-100 dark:border-slate-700 '} py-2 pl-2 border-l-2"
 							href={anchor.href}
 						>
 							{anchor.text}
 						</a>
 					{/each}
 				{:else}
-					<span class="">No headers to show!</span>
+					<span class="font-semibold">No headers to show!</span>
 				{/if}
 			</div>
 		</ul>
