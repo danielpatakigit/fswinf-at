@@ -1,5 +1,7 @@
 <script>
 	import Icon from "@iconify/svelte";
+	import { t, locales, locale } from "$lib/translations";
+
 	let menuOpen = true;
 	let menuContainer;
 
@@ -35,7 +37,7 @@
 		class="px-4 border-l-2 flex flex-col gap-4 bg-white dark:bg-slate-800"
 	>
 		<span class="text-center text-xl mt-6 font-bold border-b w-full">
-			Navigation
+			{$t("standard.navigation")}
 		</span>
 		<slot />
 	</div>

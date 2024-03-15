@@ -94,7 +94,7 @@
 		<span>{data.meta.date}</span>
 		<span class="text-slate-800">•</span>
 		<span class="uppercase tracking-wide text-winfblue-400">
-			{data.categories.current}
+			{$t(`standard.${data.categories.current}`)}
 		</span>
 	</div>
 </hgroup>
@@ -139,7 +139,7 @@
 					<div class="flex flex-col gap-0">
 						<span class="text-xs">{$t("standard.read_more")}</span>
 						<span class="font-medium capitalize">
-							{i == 0 ? "" : nextCategory.name}
+							{i == 0 ? "" : $t(`standard.${nextCategory.name}`)}
 						</span>
 					</div>
 				</a>

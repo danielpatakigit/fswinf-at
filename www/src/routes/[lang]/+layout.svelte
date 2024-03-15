@@ -100,7 +100,7 @@
 							: ''}  capitalize px-2
 				sm:px-4 py-2 font-medium rounded-md flex hover:bg-slate-100 dark:hover:bg-slate-800"
 					>
-						{category}
+						{$t(`standard.${category}`)}
 					</a>
 				{/if}
 			{/each}
@@ -193,7 +193,7 @@
 						href="/{$locale}/{pages[0] ? pages[0] : ''}"
 						class="capitalize hover:bg-winfgreen-600 dark:hover:bg-slate-900 py-2 px-2 rounded-md"
 					>
-						{category}
+						{$t(`standard.${category}`)}
 					</a>
 				{/each}
 			</div>

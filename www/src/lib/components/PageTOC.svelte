@@ -1,5 +1,7 @@
 <script>
 	import { afterNavigate } from "$app/navigation";
+	import { t, locales, locale } from "$lib/translations";
+
 	let anchorLinks = [];
 
 	afterNavigate(() => {
@@ -51,7 +53,9 @@
 <svelte:window on:scroll={onWindowScroll} />
 
 <ul class="flex-col text-sm h-min font-header">
-	<span class="capitalize font-semibold text-base">On this page</span>
+	<span class="capitalize font-semibold text-base">
+		{$t("standard.on_this_page")}
+	</span>
 	<div
 		class="flex flex-col mt-2 font-normal text-sm bg-white dark:bg-transparent w-full"
 		id="on-this-page"
@@ -68,7 +72,7 @@
 				</a>
 			{/each}
 		{:else}
-			<span class="font-normal">No headers to show!</span>
+			<span class="font-normal">{$t("standard.no_headers")}</span>
 		{/if}
 	</div>
 </ul>

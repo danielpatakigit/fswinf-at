@@ -73,14 +73,14 @@
 			></Icon>
 		</a>
 		<span class="capitalize text-left lg:pl-2">
-			{currentCategory}
+			{$t(`standard.${currentCategory}`)}
 		</span>
 		<a
 			class="flex text-winfgreen-400 opacity-65 hover:opacity-100 items-center ml-8 capitalize justify-end"
 			href="/{$locale}/{nextCategory.href}"
 		>
 			<span class="text-xs">
-				{nextCategory.name}
+				{$t(`standard.${nextCategory.name}`)}
 			</span>
 			<Icon
 				icon="mdi:chevron-right"
