@@ -114,7 +114,7 @@
 				on:click={onSettingsClick}
 				class="flex gap-2 border-2 dark:border-slate-600 px-2 sm:px-4 py-2 font-semibold rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
 			>
-				<span class="hidden sm:block">Settings</span>
+				<span class="hidden sm:block">{$t("standard.settings")}</span>
 				<Icon
 					icon="quill:cog"
 					class="text-2xl z-50"
@@ -123,43 +123,54 @@
 			<div
 				class="{settingsOpen
 					? 'visible'
-					: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border dark:border-slate-600 bg-white dark:bg-slate-900 *:flex *:items-center *:gap-2 *:w-full *:h-10 hover:*:bg-slate-200 dark:hover:*:bg-slate-800 *:rounded-md *:p-2"
+					: 'invisible'} shadow-md p-1 absolute rounded z-40 top-12 w-48 right-0 border dark:border-slate-600 bg-white dark:bg-slate-900 *:flex *:items-center *:gap-2 *:w-full *:h-10 *:px-2 *:rounded-md"
 			>
 				<button
 					on:click={toggleMode}
-					class=""
+					class="hover:bg-slate-200 dark:hover:bg-slate-800"
 				>
 					<Icon
 						icon={"mdi:theme-light-dark"}
 						class="text-xl"
 					></Icon>
-					<span>Light Mode</span>
+					<span>{$t("standard.light_mode")}</span>
 				</button>
 				<a
 					href="/{$locale}/search"
-					class=""
+					class=" hover:bg-slate-200 dark:hover:bg-slate-800"
 				>
 					<Icon
 						icon={"mdi:search"}
 						class="text-xl"
 					></Icon>
-					<span>Search</span>
+					<span>{$t("standard.search")}</span>
 				</a>
-				<select
-					class="dark:bg-slate-900"
-					on:change={({ target }) => {
-						goto(target.value);
-					}}
+
+				<label
+					for="lang"
+					class="justify-center items-center hover:bg-slate-200 dark:hover:bg-slate-800"
 				>
-					{#each $locales as lc}
-						<option
-							value="/{lc}{route}"
-							selected={lc === $locale}
-						>
-							{$t(`lang.${lc}`)}
-						</option>
-					{/each}
-				</select>
+					<Icon
+						icon={"mdi:language"}
+						class="text-2xl mx-auto"
+					></Icon>
+					<select
+						id="lang"
+						class="dark:bg-slate-900 w-full h-full hover:bg-slate-200 dark:hover:bg-slate-800"
+						on:change={({ target }) => {
+							goto(target.value);
+						}}
+					>
+						{#each $locales as lc}
+							<option
+								value="/{lc}{route}"
+								selected={lc === $locale}
+							>
+								{$t(`lang.${lc}`)}
+							</option>
+						{/each}
+					</select>
+				</label>
 			</div>
 		</div>
 	</article>

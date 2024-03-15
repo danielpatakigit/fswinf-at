@@ -5,6 +5,10 @@ import { vitePreprocess } from "@sveltejs/kit/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 
+import lang from "./src/lib/translations/lang.js";
+
+const supportedLocales = Object.keys(lang);
+
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: [".md"],
@@ -20,18 +24,14 @@ const config = {
 	preprocess: [mdsvex(mdsvexOptions), vitePreprocess({})],
 
 	kit: {
-		adapter: adapter({
-			// default options are shown. On some platforms
-			// these options are set automatically — see below
-			pages: "build",
-			assets: "build",
-			fallback: null,
-			precompress: false,
-			strict: true,
-		}),
+		adapter: adapter(),
 		prerender: {
 			crawl: true,
-			entries: ["/en", "/de", "*"],
+			// NOTE: You can modify your exported error pages here.
+			entries: supportedLocales.reduce(
+				(acc, locale) => [...acc, `/${locale}`],
+				["*"],
+			),
 		},
 	},
 };

@@ -137,7 +137,7 @@
 						></Icon>
 					</div>
 					<div class="flex flex-col gap-0">
-						<span class="text-xs">More in:</span>
+						<span class="text-xs">{$t("standard.read_more")}</span>
 						<span class="font-medium capitalize">
 							{i == 0 ? "" : nextCategory.name}
 						</span>

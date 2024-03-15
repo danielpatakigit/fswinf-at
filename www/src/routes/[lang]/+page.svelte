@@ -31,17 +31,7 @@
 <section class=" dark:bg-slate-900">
 	<article class="flex flex-col py-12 gap-16">
 		{#if loaded}
-			<div
-				in:fly={{
-					delay: 0,
-					duration: 1200,
-					x: 0,
-					y: -20,
-					opacity: 0,
-					easing: quintIn,
-				}}
-				class="text-center flex flex-col items-center gap-4"
-			>
+			<div class="text-center flex flex-col items-center gap-4">
 				<div
 					class="rounded-full italic font-medium text-white py-2 px-4 font-header bg-winfgreen-400"
 				>
@@ -50,17 +40,13 @@
 				<h1
 					class="text-balance text-5xl md:text-7xl font-semibold leading-none tracking-tight"
 				>
-					We are <br />
-					the
+					{@html $t("standard.we_are_the")}
 					<span class="text-winfgreen-500 font-header">FS Winf!</span>
 				</h1>
 				<h2
 					class="mt-2 text-balance flex flex-col text-slate-700 dark:text-slate-200"
 				>
-					Fachschaft und Studienvertretung für Wirtschaftsinformatik <br
-						class="hidden md:block"
-					/>
-					und Data Science an der TU Wien
+					{@html $t("standard.fswinf_description")}
 				</h2>
 			</div>
 			<!-- <div
@@ -182,7 +168,7 @@
 					href="/{$locale}/{posts[0].slug}"
 					class="flex items-center gap-1 underline decoration-winfgreen-500 underline-offset-4 group"
 				>
-					<span>Neuigkeiten</span>
+					<span>{$t("standard.news")}</span>
 					<Icon
 						class="group-hover:-rotate-45 group-hover:text-winfgreen-500"
 						icon="gg:arrow-right"
@@ -248,7 +234,9 @@
 				href="/{$locale}/{posts[0].slug}"
 				class="border-2 rounded-full py-2 px-4 shadow-sm flex items-center gap-1 hover:opacity-75"
 			>
-				<button class="font-medium">All posts</button>
+				<button class="font-medium">
+					{$t("standard.all_posts")}
+				</button>
 				<Icon
 					icon="mdi-chevron-right"
 					class="text-xl"

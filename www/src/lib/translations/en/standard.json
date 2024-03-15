@@ -6,5 +6,19 @@
 	"404": "Page not found.",
 	"500": "Server internal error.",
 	"default": "An error has occured.",
-	"notification--comment": "Sie haben {{count:gt; 0:{{count}} neue {{count; 1:Nachricht; default:Nachrichten}}!; default:keine Nachrichten...}}"
+	"notification--comment": "Sie haben {{count:gt; 0:{{count}} neue {{count; 1:Nachricht; default:Nachrichten}}!; default:keine Nachrichten...}}",
+	"news": "News",
+	"settings": "Settings",
+	"light_mode": "Light Mode",
+	"search": "Search",
+	"we_are_the": "We are <br />the",
+	"all_posts": "All posts",
+	"fswinf_description": "Student Council and Student Representatives <br/> for Business Informatics  and Data Science at TU Wien",
+	"posts": "Posts",
+	"studies": "Studies",
+	"search_for_anything": "Search for anything",
+	"on_this_page": "On this page",
+	"read_more": "Read more:",
+	"navigation": "Navigation",
+	"funny_text_here": "Funny Text Here"
 }
