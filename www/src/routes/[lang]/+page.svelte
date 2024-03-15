@@ -63,7 +63,7 @@
 					und Data Science an der TU Wien
 				</h2>
 			</div>
-			<div
+			<!-- <div
 				in:fly={{
 					delay: 0,
 					duration: 1400,
@@ -159,7 +159,7 @@
 						/>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<!-- <iframe
 				title="calendar"
@@ -175,7 +175,7 @@
 </section>
 
 <section>
-	<article class="mb-12 mt-24 flex flex-col gap-12">
+	<article class="mb-12 mt-36 flex flex-col gap-12">
 		<div class="flex flex-col items-center gap-6 justify-center">
 			<h2 class="text-3xl md:text-5xl font-semibold">
 				<a

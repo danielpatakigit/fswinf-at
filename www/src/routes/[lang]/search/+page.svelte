@@ -90,7 +90,7 @@
 						<span class="font-bold">{result.title}</span>
 					</h2>
 					<p
-						class="font-light text-sm text-slate-500 dark:text-slate-200 line-clamp-3"
+						class="font-normal text-sm text-slate-500 dark:text-slate-200 line-clamp-3"
 					>
 						{result.description}
 					</p>

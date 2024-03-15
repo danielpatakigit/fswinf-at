@@ -1,7 +1,7 @@
 const sorting = {
+	posts: ["welcome"],
 	studies: ["example", "hello", "introduction"],
 	dev: ["todo", "ideas"],
-	posts: ["welcome"],
 
 	// services: [],
 };

@@ -79,7 +79,7 @@
 				/>
 			{/if}
 			<span
-				class="absolute top-9 left-5 italic text-[10px] font-light"
+				class="absolute top-9 left-5 italic text-[10px] font-normal"
 			>
 				Demo website
 			</span>
@@ -219,12 +219,12 @@
 					{/each}
 				</div>
 			</div>
-			<div class="text-sm font-light flex gap-4">
+			<div class="text-sm font-normal flex gap-4">
 				<span>Terms of use</span>
 				<span>Privacy Policy</span>
 				<span>Etc.</span>
 			</div>
-			<div class="font-light text-sm">
+			<div class="font-normal text-sm">
 				Copyright c <br />
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
 				a dolores? Perspiciatis facilis vitae cum molestias repellat id
